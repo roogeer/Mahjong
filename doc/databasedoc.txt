@@ -1,0 +1,196 @@
+建立以下数据表
+#########只要以下两个表######
+1、工作区游戏信息表，TableGameInfo
+CREATE TABLE TableGameInfo(
+p1name TEXT, 
+p2name TEXT, 
+p3name TEXT,
+p4name TEXT, 
+jdvalue INTEGER,
+riqi TEXT,
+PRIMARY KEY(riqi)
+);
+
+2、工作区游戏记录表，TableGameRec
+CREATE  TABLE TableGameRec(
+p1value INTEGER, 
+p2value INTEGER, 
+p3value INTEGER, 
+p4value INTEGER, 
+shijian TEXT, 
+riqi TEXT,
+FOREIGN KEY(riqi) REFERENCES TableGameInfo(riqi)
+);
+
+3、###超牛B的视图viwGameInfo，有了这个，后面的全都不需要了，程序逻辑也要跟着改
+select b.riqi,a.p1name,b.p1sum,b.p1jds,a.p2name,b.p2sum,b.p2jds,a.p3name,b.p3sum,b.p3jds,a.p4name,b.p4sum,b.p4jds from 
+(select TableGameRec.riqi,
+sum(p1value) as p1sum,
+sum(case when p1value>=TableGameInfo.jdvalue then 1 else 0 end) as p1jds,
+sum(p2value) as p2sum,
+sum(case when p2value>=TableGameInfo.jdvalue then 1 else 0 end) as p2jds,
+sum(p3value) as p3sum,
+sum(case when p3value>=TableGameInfo.jdvalue then 1 else 0 end) as p3jds,
+sum(p4value) as p4sum,
+sum(case when p4value>=TableGameInfo.jdvalue then 1 else 0 end) as p4jds
+from TableGameInfo inner join TableGameRec on TableGameInfo.riqi=TableGameRec.riqi 
+group by TableGameRec.riqi) as b
+inner join
+(select riqi,p1name,p2name,p3name,p4name from TableGameInfo) as a
+on a.riqi=b.riqi
+
+###测试数据
+insert into TableGameInfo values("胡", "徐", "程", "喻", 150, "2015-07-12 01:30");
+insert into TableGameRec values(-1,-2,-3, 6, "01:00", "2015-07-12 01:30");
+insert into TableGameRec values(-50,-50,-50, 150, "02:00", "2015-07-12 01:30");
+insert into TableGameRec values(150,-50,-50, -50, "03:00", "2015-07-12 01:30");
+insert into TableGameRec values(-40,120,-40, -40, "04:00", "2015-07-12 01:30");
+
+insert into TableGameInfo values("喻", "程", "徐", "胡", 150, "2015-07-13 20:30");
+insert into TableGameRec values(-10,-20,-30,60, "21:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,150,-50,-50, "22:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,-50,150,-50, "23:00", "2015-07-13 20:30");
+insert into TableGameRec values(150,-50,-50,-50, "24:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,150,-50,-50, "00:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,-50,-50,150, "01:00", "2015-07-13 20:30");
+########################
+
+
+
+1、工作区游戏信息表，WorkTable_GameInfo
+CREATE TABLE WorkTable_GameInfo(
+p1name TEXT, 
+p2name TEXT, 
+p3name TEXT,
+p4name TEXT, 
+jdvalue INTEGER,
+riqi TEXT,
+PRIMARY KEY(riqi)
+);
+
+2、工作区游戏记录表，WorkTable_GameRec
+CREATE  TABLE WorkTable_GameRec(
+p1value INTEGER, 
+p2value INTEGER, 
+p3value INTEGER, 
+p4value INTEGER, 
+shijian TEXT, 
+riqi TEXT,
+FOREIGN KEY(riqi) REFERENCES WorkTable_GameInfo(riqi)
+);
+
+3、存储区游戏住处表，StoreTable_GameInfo
+CREATE TABLE StoreTable_GameInfo(
+p1name TEXT, 
+p1sum INTEGER,
+p1jds INTEGER,
+p2name TEXT, 
+p2sum INTEGER,
+p2jds INTEGER,
+p3name TEXT,
+p3sum INTEGER,
+p3jds INTEGER,
+p4name TEXT, 
+p4sum INTEGER,
+p4jds INTEGER,
+jdvalue INTEGER,
+riqi TEXT,
+PRIMARY KEY(riqi)
+);
+
+4、存储区游戏记录表，StoreTable_GameRec
+CREATE  TABLE StoreTable_GameRec(
+p1value INTEGER, 
+p2value INTEGER, 
+p3value INTEGER, 
+p4value INTEGER, 
+shijian TEXT, 
+riqi TEXT,
+FOREIGN KEY(riqi) REFERENCES StoreTable_GameInfo(riqi)
+);
+
+5、定义视图viewGameInfo
+###超牛B的视图，有了这个，后面的全都不需要了，程序逻辑也要跟着改
+select b.riqi,a.p1name,b.p1sum,b.p1jds,a.p2name,b.p2sum,b.p2jds,a.p3name,b.p3sum,b.p3jds,a.p4name,b.p4sum,b.p4jds from 
+(select StoreTable_GameRec.riqi,
+sum(p1value) as p1sum,
+sum(case when p1value>=StoreTable_GameInfo.jdvalue then 1 else 0 end) as p1jds,
+sum(p2value) as p2sum,
+sum(case when p2value>=StoreTable_GameInfo.jdvalue then 1 else 0 end) as p2jds,
+sum(p3value) as p3sum,
+sum(case when p3value>=StoreTable_GameInfo.jdvalue then 1 else 0 end) as p3jds,
+sum(p4value) as p4sum,
+sum(case when p4value>=StoreTable_GameInfo.jdvalue then 1 else 0 end) as p4jds
+from StoreTable_GameInfo inner join StoreTable_GameRec on StoreTable_GameInfo.riqi=StoreTable_GameRec.riqi 
+group by StoreTable_GameRec.riqi) as b
+inner join
+(select riqi,p1name,p2name,p3name,p4name from StoreTable_GameInfo) as a
+on a.riqi=b.riqi
+
+
+###合计viewSumWorktableGameRec 
+ select sum(p1value) as p1sum, sum(p2value) as p2sum , sum(p3value) as p3sum, sum(p4value) as p4sum  from WorkTable_GameRec
+
+###统计单个玩家的金顶数
+viewP1jdsWorkTableGameRec
+select count(p1value) as p1jds from WorkTable_GameRec, WorkTable_Gameinfo where p1value>=WorkTable_Gameinfo.jdvalue
+
+viewP2jdsWorkTableGameRec
+select count(p2value) as p2jds from WorkTable_GameRec, WorkTable_Gameinfo where p2value>=WorkTable_Gameinfo.jdvalue
+
+viewP3jdsWorkTableGameRec
+select count(p3value) as p3jds from WorkTable_GameRec, WorkTable_Gameinfo where p3value>=WorkTable_Gameinfo.jdvalue
+
+viewP4jdsWorkTableGameRec
+select count(p4value) as p4jds from WorkTable_GameRec, WorkTable_Gameinfo where p4value>=WorkTable_Gameinfo.jdvalue
+
+###整体视图viewStoreTableGameInfo
+ select a.p1name, a.p1sum, a.p1jds, a.p2name, a.p2sum, a.p2jds, a.p3name, a.p3sum, a.p3jds, a.p4name, a.p4sum, a.p4jds, a.jdvalue, a.riqi
+from StoreTable_GameInfo as a
+order by rowid desc
+
+
+*杂项
+select strftime('%Y-%m-%d %H:%M');
+PRAGMA foreign_keys=ON;
+PRAGMA foreign_keys;
+
+
+###测试数据
+insert into TableGameInfo values("胡", "徐", "程", "喻", 150, "2015-07-12 01:30");
+insert into TableGameRec values(-1,-2,-3, 6, "01:00", "2015-07-12 01:30");
+insert into TableGameRec values(-50,-50,-50, 150, "02:00", "2015-07-12 01:30");
+insert into TableGameRec values(150,-50,-50, -50, "03:00", "2015-07-12 01:30");
+
+insert into TableGameInfo values("喻", "程", "徐", "胡", 150, "2015-07-13 20:30");
+insert into TableGameRec values(-10,-20,-30,60, "21:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,150,-50,-50, "22:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,-50,150,-50, "23:00", "2015-07-13 20:30");
+insert into TableGameRec values(150,-50,-50,-50, "24:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,150,-50,-50, "00:00", "2015-07-13 20:30");
+insert into TableGameRec values(-50,-50,-50,150, "01:00", "2015-07-13 20:30");
+
+选择使用测试数据1
+delete from TableGameRec;
+delete from TableGameInfo;
+
+insert into TableGameInfo(p1name,p2name,p3name,p4name,p4name,jdvalue,riqi)
+ select * from TableGameInfo
+ where riqi="2015-07-12 01:30";
+
+insert into WorkTable_GameRec(p1value,p2value,p3value,p4value,shijian,riqi)
+ select * from StoreTable_GameRec
+ where riqi="2015-07-12 01:30";
+ 
+===================================
+选择使用测试数据2
+delete from WorkTable_GameRec;
+delete from WorkTable_GameInfo;
+
+insert into WorkTable_GameInfo(p1name,p1sum,p1jds,p2name,p2sum,p2jds,p3name,p3sum,p3jds,p4name,p4sum,p4jds,jdvalue,riqi)
+ select * from StoreTable_GameInfo
+ where riqi="2015-07-13 20:30";
+
+insert into WorkTable_GameRec(p1value,p2value,p3value,p4value,shijian,riqi)
+ select * from StoreTable_GameRec
+ where riqi="2015-07-13 20:30";

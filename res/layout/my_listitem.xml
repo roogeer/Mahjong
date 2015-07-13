@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/MyListItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff080808"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    >
+    
+    <TextView
+        android:id="@+id/SN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+    	android:textColor="#ffe7e7e7"
+    	android:gravity="center"
+    	android:layout_weight="0.166"
+        >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/playerOneData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+    	android:textColor="#ffe7e7e7"
+    	android:gravity="center"
+    	android:layout_weight="0.166"
+        >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/playerTwoData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+    	android:textColor="#ffe7e7e7"
+    	android:gravity="center"
+    	android:layout_weight="0.166"
+        >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/playerThreeData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+    	android:textColor="#ffe7e7e7"
+		android:gravity="center"
+    	android:layout_weight="0.166"		
+        >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/playerFourData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+    	android:textColor="#ffe7e7e7"
+    	android:gravity="center"
+    	android:layout_weight="0.166"    	
+        >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/timeData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+    	android:textColor="#ffe7e7e7"
+    	android:gravity="center"
+    	android:layout_weight="0.17"
+        >
+    </TextView>
+</LinearLayout>
