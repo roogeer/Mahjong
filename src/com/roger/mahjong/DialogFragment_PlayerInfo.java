@@ -1,6 +1,6 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
-import com.roger.majhong.DialogFragment_Add.AddInputListener;
+import com.roger.mahjong.DialogFragment_Add.AddInputListener;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

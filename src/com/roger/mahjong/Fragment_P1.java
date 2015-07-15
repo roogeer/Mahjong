@@ -1,4 +1,4 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
 import android.app.Fragment;
 import android.os.Bundle;

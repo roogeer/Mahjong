@@ -1,11 +1,11 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class MajhongDatabaseHelper extends SQLiteOpenHelper {
+public class MahjongDatabaseHelper extends SQLiteOpenHelper {
 	
 	final String CREATE_TABLE_GameRec_LastInfo = "create table GameRec_LastInfo(" +
 			"_id integer primary key autoincrement," +
@@ -29,7 +29,7 @@ public class MajhongDatabaseHelper extends SQLiteOpenHelper {
 			"shijian varchar(8)" +
 			")";	
 			
-	public MajhongDatabaseHelper(Context context, String databaseName, int version)
+	public MahjongDatabaseHelper(Context context, String databaseName, int version)
 	{
 		super(context, databaseName, null, version);
 	}

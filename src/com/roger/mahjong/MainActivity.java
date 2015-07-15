@@ -1,11 +1,11 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import com.roger.majhong.DialogFragment_PlayerInfo.InfoInputListener;
+import com.roger.mahjong.DialogFragment_PlayerInfo.InfoInputListener;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 		
 		Toast.makeText(getApplicationContext(), "好的继续", Toast.LENGTH_SHORT).show();
 		//从数据库中读取记录，包装好后，启动Activity_NewGame
-		MajhongDatabaseHelper dbHelper = new MajhongDatabaseHelper(this, "majhong.db", 1);
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
 		SQLiteDatabase db=dbHelper.getWritableDatabase();
 		String strSQL = "select p1name, p1jds, p2name, p2jds, p3name, p3jds, p4name, p4jds, jds from GameRec_LastInfo";
 		Cursor cursor =  db.rawQuery(strSQL, null);
@@ -214,7 +214,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 				"shijian varchar(8)" +
 				")";		
 		
-		MajhongDatabaseHelper dbHelper = new MajhongDatabaseHelper(this, "majhong.db", 1);
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
 		SQLiteDatabase db=dbHelper.getWritableDatabase();
 
 		db.execSQL("drop table GameRec_LastInfo");

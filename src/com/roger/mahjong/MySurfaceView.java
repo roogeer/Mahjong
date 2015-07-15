@@ -1,6 +1,6 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
-import com.roger.majhong.PlayerInfo.MyLine;
+import com.roger.mahjong.PlayerInfo.MyLine;
 
 import android.R.integer;
 import android.R.string;

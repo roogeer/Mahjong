@@ -1,4 +1,4 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
 import android.R.integer;
 import android.R.string;

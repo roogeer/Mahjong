@@ -1,4 +1,4 @@
-package com.roger.majhong;
+package com.roger.mahjong;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.roger.majhong.DialogFragment_Add.AddInputListener;
+import com.roger.mahjong.DialogFragment_Add.AddInputListener;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -706,7 +706,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 
 	private void writeInDatabase(int p1data, int p2data, int p3data, int p4data, String shijian)
 	{
-		MajhongDatabaseHelper dbHelper = new MajhongDatabaseHelper(this, "majhong.db", 1);
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
 		SQLiteDatabase db=dbHelper.getWritableDatabase();
 		//添加每一局的记录
 		db.execSQL("insert into GameRec_LastDetail(p1data, p2data, p3data, p4data, shijian) values(?,?,?,?,?)", new Object[]{p1data,p2data,p3data,p4data,shijian});
