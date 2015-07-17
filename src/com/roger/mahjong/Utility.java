@@ -9,10 +9,12 @@ public class Utility {
 
 	public static int GetTextSizeFactor(Activity activity)
 	{
-		Display display = activity.getWindowManager().getDefaultDisplay();
-		Point point = new Point();
-		display.getSize(point);
-		return 20*(point.x/480);	//屏幕实际宽度point.x
+		//Display display = activity.getWindowManager().getDefaultDisplay();
+		//Point point = new Point();
+		//display.getSize(point);
+		//return 20*(point.x/480);	//屏幕实际宽度point.x
+		
+		return 20;
 	}
 
 	public static String FormatData1To9(String numStr)
