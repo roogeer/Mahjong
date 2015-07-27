@@ -12,8 +12,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -119,7 +121,14 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			//intP1SumJds = 0;
 			//intP2SumJds = 0;
 			//intP3SumJds = 0;
-			//intP4SumJds = 0;				
+			//intP4SumJds = 0;	
+			
+			//生成记录标识名，写入SharePrefences
+			
+			//SharedPreferences.Editor editor = this.getSharedPreferences("GameInfo", MODE_PRIVATE).edit();
+			//editor.putString("LastGameRiqi", riqi);
+			//editor.commit();
+			Utility.SaveGameRiqi(this);
 		}
 		else if(GameFlag.equalsIgnoreCase("goon"))
 		{

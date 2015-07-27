@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
@@ -94,6 +95,13 @@ public class MainActivity extends Activity implements InfoInputListener{
 	
 	public void GoOnClick(View v)
 	{
+		//从SharePerferences中提取最后的游戏时期参数
+		
+		//SharedPreferences pref = getSharedPreferences("GameInfo", MODE_PRIVATE);
+		//String riqi = pref.getString("LastGameRiqi", "");
+		String riqi = Utility.LoadGameRiqi(this);
+		Log.d("roger", riqi);		
+		
 		ArrayList<HashMap<String, String>> mylist;
 		
 		Toast.makeText(getApplicationContext(), "好的继续", Toast.LENGTH_SHORT).show();
