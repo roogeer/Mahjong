@@ -4,36 +4,29 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.util.Log;
-import android.view.Display;
 
 
 public class Utility {
 
-	public static void SaveGameRiqi(Activity activity)
+	public static void SaveGameRiqi()
 	{
 		String riqi = (new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")).format(new Date());
 		Log.d("roger", riqi);
 		
-		SharedPreferences.Editor editor = activity.getSharedPreferences("GameInfo", android.content.Context.MODE_PRIVATE).edit();
+		SharedPreferences.Editor editor = MyApplication.getContext().getSharedPreferences("GameInfo", android.content.Context.MODE_PRIVATE).edit();
 		editor.putString("LastGameRiqi", riqi);
 		editor.commit();
 	}
 	
-	public static String LoadGameRiqi(Activity activity)
+	public static String LoadGameRiqi()
 	{
-		SharedPreferences pref =activity.getSharedPreferences("GameInfo", android.content.Context.MODE_PRIVATE);
+		SharedPreferences pref = MyApplication.getContext().getSharedPreferences("GameInfo", android.content.Context.MODE_PRIVATE);
 		return pref.getString("LastGameRiqi", "");
 	}
 	
 	public static int GetTextSizeFactor(Activity activity)
 	{
-		//Display display = activity.getWindowManager().getDefaultDisplay();
-		//Point point = new Point();
-		//display.getSize(point);
-		//return 20*(point.x/480);	//ÆÁÄ»Êµ¼Ê¿í¶Èpoint.x
-		
 		return 20;
 	}
 

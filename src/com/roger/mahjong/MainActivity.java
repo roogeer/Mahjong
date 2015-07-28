@@ -95,11 +95,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 	
 	public void GoOnClick(View v)
 	{
-		//从SharePerferences中提取最后的游戏时期参数
-		
-		//SharedPreferences pref = getSharedPreferences("GameInfo", MODE_PRIVATE);
-		//String riqi = pref.getString("LastGameRiqi", "");
-		String riqi = Utility.LoadGameRiqi(this);
+		String riqi = Utility.LoadGameRiqi();
 		Log.d("roger", riqi);		
 		
 		ArrayList<HashMap<String, String>> mylist;
