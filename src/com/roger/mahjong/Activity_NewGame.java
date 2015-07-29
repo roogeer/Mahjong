@@ -120,9 +120,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			//intP2SumJds = 0;
 			//intP3SumJds = 0;
 			//intP4SumJds = 0;	
-			
-			//生成记录标识名，写入SharePrefences
-			Utility.SaveGameRiqi();
 		}
 		else if(GameFlag.equalsIgnoreCase("goon"))
 		{

@@ -2,19 +2,14 @@ package com.roger.mahjong;
 
 import com.roger.mahjong.PlayerInfo.MyLine;
 
-import android.R.integer;
-import android.R.string;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Paint.FontMetrics;
-import android.text.TextPaint;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;

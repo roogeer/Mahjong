@@ -2,8 +2,6 @@ package com.roger.mahjong;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -54,7 +52,7 @@ public class DataAdapter extends BaseAdapter {
 			myInflater = LayoutInflater.from(c);
 			convertView = myInflater.inflate(R.layout.my_listitem, null);
 			
-			int textsize = Utility.GetTextSizeFactor((Activity)c);
+			int textsize = Utility.GetTextSizeFactor();
 			Log.i("roger", String.valueOf(textsize));
 			
 			holder.tvSN = (TextView)convertView.findViewById(R.id.SN);

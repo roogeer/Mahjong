@@ -1,8 +1,6 @@
 package com.roger.mahjong;
 
 import java.util.ArrayList;
-
-import android.R.integer;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;

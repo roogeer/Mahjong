@@ -1,6 +1,6 @@
 package com.roger.mahjong;
 
-import com.roger.mahjong.DialogFragment_Add.AddInputListener;
+//import com.roger.mahjong.DialogFragment_Add.AddInputListener;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,8 +37,7 @@ public class DialogFragment_PlayerInfo extends DialogFragment {
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View view = inflater.inflate(R.layout.dialogfragment_playerinfo, null);
 		
-		int textsize = Utility.GetTextSizeFactor(this.getActivity());
-		//Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();
+		int textsize = Utility.GetTextSizeFactor();
 		
 		tvp1 = (TextView)view.findViewById(R.id.info_tvDong);
 		tvp1.setTextSize(textsize);
@@ -78,11 +77,11 @@ public class DialogFragment_PlayerInfo extends DialogFragment {
 						public void onClick(DialogInterface diglog, int id)
 						// TODO Auto-generated method stub
 						{
-							String p1 =etP1.getText().toString().trim().isEmpty()?"东":etP1.getText().toString().trim();
-							String p2 =etP2.getText().toString().trim().isEmpty()?"南":etP2.getText().toString().trim();
-							String p3 =etP3.getText().toString().trim().isEmpty()?"西":etP3.getText().toString().trim();
-							String p4 =etP4.getText().toString().trim().isEmpty()?"北":etP4.getText().toString().trim();
-							String jds = etJDS.getText().toString().trim().isEmpty()?"50":etJDS.getText().toString().trim();
+							String p1 =etP1.getText().toString().trim().isEmpty()?"东":etP1.getText().toString().trim().substring(0, 1);
+							String p2 =etP2.getText().toString().trim().isEmpty()?"南":etP2.getText().toString().trim().substring(0, 1);
+							String p3 =etP3.getText().toString().trim().isEmpty()?"西":etP3.getText().toString().trim().substring(0, 1);
+							String p4 =etP4.getText().toString().trim().isEmpty()?"北":etP4.getText().toString().trim().substring(0, 1);
+							String jds = etJDS.getText().toString().trim().isEmpty()?"150":etJDS.getText().toString().trim();
 							
 							InfoInputListener infoInputListener = (InfoInputListener)getActivity();
 							infoInputListener.onInfoInputComplete(p1, p2, p3, p4, jds);

@@ -1,7 +1,6 @@
 package com.roger.mahjong;
 
-import android.R.integer;
-import android.R.string;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;

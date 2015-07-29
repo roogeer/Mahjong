@@ -1,39 +1,28 @@
 package com.roger.mahjong;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-
 import com.roger.mahjong.DialogFragment_PlayerInfo.InfoInputListener;
-
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
-import android.hardware.display.DisplayManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import android.os.Build;
+
 
 public class MainActivity extends Activity implements InfoInputListener{
 
 	private Button btnNewGameButton;
 	private Button btnGoOnButton;
 	private Button btnOldMemoryButton;
-	//private int TextSizefactor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +37,11 @@ public class MainActivity extends Activity implements InfoInputListener{
 		Point point = new Point();
 		display.getSize(point);
 		
-		//TextSizefactor = 20*(point.x/480);	//屏幕实际宽度point.x
 		setTitle("屏幕分辨率为："+point.x+'*'+point.y);
 		
-		btnNewGameButton.setTextSize(Utility.GetTextSizeFactor(this));
-		btnGoOnButton.setTextSize(Utility.GetTextSizeFactor(this));
-		btnOldMemoryButton.setTextSize(Utility.GetTextSizeFactor(this));
+		btnNewGameButton.setTextSize(Utility.GetTextSizeFactor());
+		btnGoOnButton.setTextSize(Utility.GetTextSizeFactor());
+		btnOldMemoryButton.setTextSize(Utility.GetTextSizeFactor());
 	}
 
 	@Override
@@ -80,11 +68,8 @@ public class MainActivity extends Activity implements InfoInputListener{
 	{
 		Toast.makeText(getApplicationContext(), "新的故事", Toast.LENGTH_SHORT).show();
 
-
 		DialogFragment_PlayerInfo dialogFragment_info = new DialogFragment_PlayerInfo();
 		dialogFragment_info.show(getFragmentManager(), "新的故事");
-
-		//return true;		
 	}
 
 	
@@ -179,7 +164,6 @@ public class MainActivity extends Activity implements InfoInputListener{
 		Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
 		Bundle bundle=new Bundle();
 		bundle.putString("gameflag", "newgame");	//选择开始一局新的游戏
-		
 		bundle.putString("playeronename", p1Name.substring(0,1));
 		bundle.putString("playertwoname", p2Name.substring(0,1));
 		bundle.putString("playerthreename", p3Name.substring(0,1));
@@ -191,44 +175,48 @@ public class MainActivity extends Activity implements InfoInputListener{
 		finish();
 		
 		//将游戏初始信息存入数据库中
-		initDataBase(p1Name, p2Name, p3Name, p4Name, Integer.valueOf(JDS));
+		Utility.SaveGameRiqi();
+		save2DB(p1Name, p2Name, p3Name, p4Name, Integer.valueOf(JDS), Utility.LoadGameRiqi());
 	}
 	
-	private void initDataBase(String p1name, String p2name, String p3name, String p4name, int jds)
+	private void save2DB(String p1name, String p2name, String p3name, String p4name, int jds, String riqi)
 	{
-		final String CREATE_TABLE_GameRec_LastInfo = "create table GameRec_LastInfo(" +
-				"_id integer primary key autoincrement," +
-				"p1name varchar(8)," +
-				"p1jds integer," +
-				"p2name varchar(8)," +
-				"p2jds integer," +
-				"p3name varchar(8)," +
-				"p3jds integer," +
-				"p4name varchar(8)," +
-				"p4jds integer," +
-				"jds integer" +
-				")";
-		
-		final String CREATE_TABLE_GameRec_LastDetail = "create table GameRec_LastDetail(" +
-				"_id integer primary key autoincrement," +
-				"p1data integer," +
-				"p2data integer," +
-				"p3data integer," +
-				"p4data integer," +
-				"shijian varchar(8)" +
-				")";		
-		
+		Log.d("roger", "in save2DB");
 		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
 		SQLiteDatabase db=dbHelper.getWritableDatabase();
-
-		db.execSQL("drop table GameRec_LastInfo");
-		db.execSQL("drop table GameRec_LastDetail");
+		db.execSQL("insert into TableGameInfo(p1name, p2name, p3name, p4name, jdvalue, riqi) values(?, ?, ?, ?, ?, ?)", new Object[]{p1name, p2name, p3name, p4name, jds, riqi});
+		db.close();
+		Toast.makeText(MyApplication.getContext(), "游戏信息已存入数据库中", Toast.LENGTH_SHORT).show();	
 		
-		db.execSQL(CREATE_TABLE_GameRec_LastInfo);
-		db.execSQL(CREATE_TABLE_GameRec_LastDetail);
+		//从数据库中读取游戏信息以检查是否正确写入
+		checkGameinfo();
+	}
+	
+	private void checkGameinfo()
+	{
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
+		SQLiteDatabase db=dbHelper.getWritableDatabase();
 		
-		db.execSQL("insert into GameRec_LastInfo(p1name, p1jds, p2name, p2jds, p3name, p3jds, p4name, p4jds, jds) values(?,?,?,?,?,?,?,?,?)", new Object[]{p1name,0,p2name,0,p3name,0,p4name,0,jds});
-		db.close();		
+		Cursor cursor = db.rawQuery("select * from TableGameInfo", null);
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				String p1name = cursor.getString(cursor.getColumnIndex("p1name"));
+				String p2name = cursor.getString(cursor.getColumnIndex("p2name"));
+				String p3name = cursor.getString(cursor.getColumnIndex("p3name"));
+				String p4name = cursor.getString(cursor.getColumnIndex("p4name"));
+				int jds = cursor.getInt(cursor.getColumnIndex("jdvalue"));
+				String riqi = cursor.getString(cursor.getColumnIndex("riqi"));
+				Log.d("roger", "东：" + p1name);
+				Log.d("roger", "南：" + p2name);
+				Log.d("roger", "西：" + p3name);
+				Log.d("roger", "北：" + p4name);
+				Log.d("roger", "金顶数：" + jds);
+				Log.d("roger", "日期：" + riqi);
+			}while(cursor.moveToNext());
+		}
+		cursor.close();
 	}
 }
 

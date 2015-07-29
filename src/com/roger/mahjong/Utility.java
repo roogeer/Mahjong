@@ -2,7 +2,6 @@ package com.roger.mahjong;
 
 import java.util.Date;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -25,7 +24,7 @@ public class Utility {
 		return pref.getString("LastGameRiqi", "");
 	}
 	
-	public static int GetTextSizeFactor(Activity activity)
+	public static int GetTextSizeFactor()
 	{
 		return 20;
 	}

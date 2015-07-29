@@ -17,6 +17,6 @@
     <string name="action_exit">退出</string>
     <string name="action_manage">设置</string>
     <string name="hint_playerName">玩家姓名</string>
-    <string name="hint_jds">金顶值(默认为50)</string>    
+    <string name="hint_jds">金顶值(默认为150)</string>    
     
 </resources>

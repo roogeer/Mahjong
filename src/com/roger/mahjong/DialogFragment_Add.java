@@ -35,7 +35,7 @@ public class DialogFragment_Add extends DialogFragment {
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View view = inflater.inflate(R.layout.dialogfragment_add, null);
 		
-		int textsize = Utility.GetTextSizeFactor(this.getActivity());
+		int textsize = Utility.GetTextSizeFactor();
 		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();
 		tvP1 = (TextView)view.findViewById(R.id.add_tvDong);
 		tvP1.setTextSize(textsize);
