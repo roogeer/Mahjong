@@ -33,10 +33,10 @@ public class Fragment_Main extends Fragment {
 		//int p2SumValue = activity_NewGame.intP2Sum;
 		//int p3SumValue = activity_NewGame.intP3Sum;
 		//int p4SumValue = activity_NewGame.intP4Sum;
-		int p1SumValue = activity_NewGame.PlayerInfoP1.LostWin;
-		int p2SumValue = activity_NewGame.PlayerInfoP2.LostWin;
-		int p3SumValue = activity_NewGame.PlayerInfoP3.LostWin;
-		int p4SumValue = activity_NewGame.PlayerInfoP4.LostWin;		
+		int p1SumValue = activity_NewGame.PlayerInfoP1.LoseWin;
+		int p2SumValue = activity_NewGame.PlayerInfoP2.LoseWin;
+		int p3SumValue = activity_NewGame.PlayerInfoP3.LoseWin;
+		int p4SumValue = activity_NewGame.PlayerInfoP4.LoseWin;		
 
 		return new MySurfaceView4Main(this.getActivity(), activity_NewGame.PlayerInfoP1, activity_NewGame.PlayerInfoP2, activity_NewGame.PlayerInfoP3, activity_NewGame.PlayerInfoP4);		
 	}

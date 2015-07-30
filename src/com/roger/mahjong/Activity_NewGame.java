@@ -12,6 +12,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,13 +27,8 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 	public PlayerInfo PlayerInfoP3;
 	public PlayerInfo PlayerInfoP4;
 	//*************************
-	
-	
-	//public String playerOneName;
-	//public String playerTwoName;
-	//public String playerThreeName;
-	//public String playerFourName;
 	public int JDS;
+	public String riqi;
 	
 	//添加记录后，修改以下变量
 	public String p1Value;
@@ -46,18 +42,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 	private int intP2;
 	private int intP3;
 	private int intP4;
-	
-	//4位玩家累计输赢数值
-	//public int intP1Sum;
-	//public int intP2Sum;
-	//public int intP3Sum;
-	//public int intP4Sum;
-	
-	//4位玩家累计金顶盘数
-	//public int intP1SumJds;
-	//public int intP2SumJds;
-	//public int intP3SumJds;
-	//public int intP4SumJds;
 	
 	int InputFlag;	//记录输入数据的标志位，以确定输入是否有效，和谁输谁赢
 	boolean InputOk;
@@ -91,18 +75,12 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP3 = new PlayerInfo();
 			PlayerInfoP4 = new PlayerInfo();
 			
-			//playerOneName = bundle.getString("playeronename");
 			PlayerInfoP1.Name=bundle.getString("playeronename");
-			
-			//playerTwoName = bundle.getString("playertwoname");
 			PlayerInfoP2.Name=bundle.getString("playertwoname");
-			
-			//playerThreeName = bundle.getString("playerthreename");
 			PlayerInfoP3.Name=bundle.getString("playerthreename");
-			
-			//playerFourName = bundle.getString("playerfourname");
 			PlayerInfoP4.Name= bundle.getString("playerfourname");
 			JDS = bundle.getInt("jds");
+			riqi = bundle.getString("riqi");
 			//intP1Data = 1;
 			
 			mylist = new ArrayList<HashMap<String,String>>();
@@ -111,15 +89,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP2.Rounds = 0;
 			PlayerInfoP3.Rounds = 0;
 			PlayerInfoP4.Rounds = 0;			
-			//intP1Sum = 0;
-			//intP2Sum = 0;
-			//intP3Sum = 0;
-			//intP4Sum = 0;
-			
-			//intP1SumJds = 0;
-			//intP2SumJds = 0;
-			//intP3SumJds = 0;
-			//intP4SumJds = 0;	
 		}
 		else if(GameFlag.equalsIgnoreCase("goon"))
 		{
@@ -128,17 +97,13 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP3 = new PlayerInfo();
 			PlayerInfoP4 = new PlayerInfo();
 			
-			//playerOneName = bundle.getString("playeronename");
-			//playerTwoName = bundle.getString("playertwoname");
-			//playerThreeName = bundle.getString("playerthreename");
-			//playerFourName = bundle.getString("playerfourname");			
 			PlayerInfoP1.Name=bundle.getString("playeronename");
 			PlayerInfoP2.Name=bundle.getString("playertwoname");
 			PlayerInfoP3.Name=bundle.getString("playerthreename");
 			PlayerInfoP4.Name= bundle.getString("playerfourname");
 			
-
 			JDS = bundle.getInt("jds");
+			riqi = bundle.getString("riqi");
 			//intP1Data = 1;
 			
 			mylist = new ArrayList<HashMap<String,String>>();
@@ -156,7 +121,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP2.Update4LostWin();
 			PlayerInfoP3.Update4LostWin();
 			PlayerInfoP4.Update4LostWin();
-			String str="好的继续："+PlayerInfoP1.Name+String.valueOf(PlayerInfoP1.LostWin)+PlayerInfoP2.Name+String.valueOf(PlayerInfoP2.LostWin)+PlayerInfoP3.Name+String.valueOf(PlayerInfoP3.LostWin)+PlayerInfoP4.Name+String.valueOf(PlayerInfoP4.LostWin)+"\n"+String.valueOf(mylist.size());
+			String str="好的继续："+PlayerInfoP1.Name+String.valueOf(PlayerInfoP1.LoseWin)+PlayerInfoP2.Name+String.valueOf(PlayerInfoP2.LoseWin)+PlayerInfoP3.Name+String.valueOf(PlayerInfoP3.LoseWin)+PlayerInfoP4.Name+String.valueOf(PlayerInfoP4.LoseWin)+"\n"+String.valueOf(mylist.size());
 			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();			
 			//**************************************
 			
@@ -170,10 +135,10 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			//intP2Sum = bundle.getInt("p2sum");
 			//intP3Sum = bundle.getInt("p3sum");
 			//intP4Sum = bundle.getInt("p4sum");
-			PlayerInfoP1.LostWin = bundle.getInt("p1sum");
-			PlayerInfoP2.LostWin = bundle.getInt("p2sum");
-			PlayerInfoP3.LostWin = bundle.getInt("p3sum");
-			PlayerInfoP4.LostWin = bundle.getInt("p4sum");			
+			PlayerInfoP1.LoseWin = bundle.getInt("p1sum");
+			PlayerInfoP2.LoseWin = bundle.getInt("p2sum");
+			PlayerInfoP3.LoseWin = bundle.getInt("p3sum");
+			PlayerInfoP4.LoseWin = bundle.getInt("p4sum");			
 			
 			//intP1SumJds = bundle.getInt("playeronejds");
 			//intP2SumJds = bundle.getInt("playertwojds");
@@ -235,8 +200,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		actionBar.addTab(Tab_P3);
 		actionBar.addTab(Tab_P4);
 		actionBar.addTab(Tab_Detail);
-		
-	
 	}
 	
 	@Override
@@ -314,21 +277,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP4 = Integer.valueOf(this.p4Value) * (-1);				
 				intP1 = (intP2 + intP3 + intP4) * (-1);
 				
-				//更新每位玩家的输赢情况
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
-				
-				//更新每位玩家的金顶盘数
-				if(Math.abs(intP2)>=JDS && Math.abs(intP3)>=JDS && Math.abs(intP4)>=JDS)
-					//intP1SumJds++;
-					PlayerInfoP1.JDS++;
-				
 				InputOk = true;
 				break;
 			}
@@ -338,21 +286,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP3 = Integer.valueOf(this.p3Value) * (-1);
 				intP4 = Integer.valueOf(this.p4Value) * (-1);				
 				intP2 = (intP1 + intP3 + intP4) * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
-				
-				//更新每位玩家的金顶盘数
-				if(Math.abs(intP1)>=JDS && Math.abs(intP3)>=JDS && Math.abs(intP4)>=JDS)
-					//intP2SumJds++;
-					PlayerInfoP2.JDS++;
-				
+
 				InputOk = true;				
 				break;
 			}
@@ -362,20 +296,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = Integer.valueOf(this.p2Value) * (-1);
 				intP4 = Integer.valueOf(this.p4Value) * (-1);				
 				intP3 = (intP1 + intP2 + intP4) * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
-				
-				//更新每位玩家的金顶盘数
-				if(Math.abs(intP1)>=JDS && Math.abs(intP2)>=JDS && Math.abs(intP4)>=JDS)
-					//intP3SumJds++;
-					PlayerInfoP3.JDS++;
 				
 				InputOk = true;				
 				break;
@@ -387,20 +307,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP3 = Integer.valueOf(this.p3Value) * (-1);				
 				intP4 = (intP1 + intP2 + intP3) * (-1);
 				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
-				
-				//更新每位玩家的金顶盘数
-				if(Math.abs(intP1)>=JDS && Math.abs(intP2)>=JDS && Math.abs(intP3)>=JDS)
-					//intP4SumJds++;
-					PlayerInfoP4.JDS++;
-				
 				InputOk = true;				
 				break;
 			}
@@ -410,15 +316,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP3 = 0;				
 				intP4 = 0;
 				intP1 = intP2 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;				
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
 				
 				InputOk = true;				
 				break;
@@ -430,15 +327,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP4 = 0;
 				intP1 = intP3 * (-1);
 				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;				
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;
-				
 				InputOk = true;
 				break;				
 			}
@@ -449,14 +337,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP4 = Integer.valueOf(this.p4Value) * (-1);
 				intP1 = intP4 * (-1);
 				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;				
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
 				InputOk = true;				
 				break;				
 			}
@@ -467,14 +347,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP4 = 0;
 				intP2 = intP1 * (-1);
 				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;				
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
 				InputOk = true;
 				break;				
 			}
@@ -485,14 +357,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP4 = 0;
 				intP2 = intP3 * (-1);
 				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;				
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
 				InputOk = true;				
 				break;				
 			}			
@@ -502,15 +366,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP3 = 0;
 				intP4 = Integer.valueOf(this.p4Value) * (-1);
 				intP2 = intP4 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+								
 				InputOk = true;				
 				break;				
 			}			
@@ -520,15 +376,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = 0;
 				intP4 = 0;
 				intP3 = intP1 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+								
 				InputOk = true;				
 				break;				
 			}
@@ -538,15 +386,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = Integer.valueOf(this.p2Value) * (-1);
 				intP4 = 0;
 				intP3 = intP2 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+
 				InputOk = true;				
 				break;				
 			}			
@@ -556,15 +396,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = 0;
 				intP4 = Integer.valueOf(this.p4Value) * (-1);
 				intP3 = intP4 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;				
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+								
 				InputOk = true;				
 				break;
 			}
@@ -574,15 +406,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = 0;
 				intP3 = 0;
 				intP4 = intP1 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+								
 				InputOk = true;
 				break;
 			}			
@@ -592,15 +416,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = Integer.valueOf(this.p2Value) * (-1);
 				intP3 = 0;
 				intP4 = intP2 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+								
 				InputOk = true;				
 				break;
 			}			
@@ -610,24 +426,12 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 				intP2 = 0;
 				intP3 = Integer.valueOf(this.p3Value) * (-1);
 				intP4 = intP3 * (-1);
-				
-				//intP1Sum += intP1;
-				//intP2Sum += intP2;
-				//intP3Sum += intP3;
-				//intP4Sum += intP4;
-				PlayerInfoP1.LostWin += intP1;
-				PlayerInfoP2.LostWin += intP2;
-				PlayerInfoP3.LostWin += intP3;
-				PlayerInfoP4.LostWin += intP4;				
+								
 				InputOk = true;				
 				break;
 			}
 		}
-		
-		//this.strDetail = this.playerOneName+p1Vlaue+";"+this.playerTwoName+p2Vlaue+";"+this.playerThreeName+p3Vlaue+";"+this.playerFourName+p4Value;
-		//this.strDetail += "\n输入标志为："+String.valueOf(InputFlag);
-		//this.strDetail += "\n"+this.playerOneName+String.valueOf(intP1)+";"+this.playerTwoName+String.valueOf(intP2)+";"+this.playerThreeName+String.valueOf(intP3)+";"+this.playerFourName+String.valueOf(intP4);
-		//Toast.makeText(this, strDetail, Toast.LENGTH_SHORT).show();
+
 		if(InputOk)	//输入的数据有效
 		{
 			//20150217存入个人记录中
@@ -639,10 +443,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP2.Rounds=PlayerInfoP2.lstRecordPerRound.size();
 			PlayerInfoP3.Rounds=PlayerInfoP3.lstRecordPerRound.size();
 			PlayerInfoP4.Rounds=PlayerInfoP4.lstRecordPerRound.size();
-			PlayerInfoP1.Update4LostWin();
-			PlayerInfoP2.Update4LostWin();
-			PlayerInfoP3.Update4LostWin();
-			PlayerInfoP4.Update4LostWin();
 			//*********************
 			
 			//存入ArrayList和数据库
@@ -660,9 +460,11 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			mylist.add(map);
 			
 			//存入数据库中
-			writeInDatabase(intP1, intP2, intP3, intP4, formatter.format(curDate));
+			writeInDatabase(intP1, intP2, intP3, intP4, formatter.format(curDate), riqi);
 			
 			SN++;
+
+			this.updatePlayerInfoFromDB();
 		}
 		switch(FragmentFlag)
 		{
@@ -687,36 +489,58 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		}
 	}
 	
-	/*
-	private String formatData(String numStr)
+	private void writeInDatabase(int p1data, int p2data, int p3data, int p4data, String shijian, String riqi)
 	{
-		String result="";
-		int num =Math.abs(Integer.parseInt(numStr));
-
-		if(num < 10)
-		{
-			result+="0";
-		}
-		
-		result+=String.valueOf(num);
-		
-		return result;
-	}
-	*/	
-
-	private void writeInDatabase(int p1data, int p2data, int p3data, int p4data, String shijian)
-	{
+		//20150730更新
 		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
 		SQLiteDatabase db=dbHelper.getWritableDatabase();
 		//添加每一局的记录
-		db.execSQL("insert into GameRec_LastDetail(p1data, p2data, p3data, p4data, shijian) values(?,?,?,?,?)", new Object[]{p1data,p2data,p3data,p4data,shijian});
-		
-		//更新玩家金顶数
-		//String str ="update gameRec_lastinfo set p1jds="+String.valueOf(intP1SumJds)+", p2jds="+String.valueOf(intP2SumJds)+", p3jds="+String.valueOf(intP3SumJds)+", p4jds="+String.valueOf(intP4SumJds)+" where _id=1";
-		String str ="update gameRec_lastinfo set p1jds="+String.valueOf(PlayerInfoP1.JDS)+", p2jds="+String.valueOf(PlayerInfoP2.JDS)+", p3jds="+String.valueOf(PlayerInfoP3.JDS)+", p4jds="+String.valueOf(PlayerInfoP4.JDS)+" where _id=1";
-		Log.i("roger", str);
-		db.execSQL(str);		
-		
+		db.execSQL("insert into TableGameRec(p1value, p2value, p3value, p4value, shijian, riqi) values(?,?,?,?,?,?)", new Object[]{p1data,p2data,p3data,p4data,shijian,riqi});
 		db.close();	
 	}
+	
+	private void updatePlayerInfoFromDB()
+	{
+		//20150730更新		
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(MyApplication.getContext(), "mahjong.db", 1);
+		SQLiteDatabase db=dbHelper.getWritableDatabase();
+
+		Cursor cursor = db.rawQuery("SELECT * FROM ViewGameInfo WHERE riqi='" + Utility.LoadGameRiqi() + "'", null);
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				this.PlayerInfoP1.LoseWin = cursor.getInt(cursor.getColumnIndex("p1sum"));
+				this.PlayerInfoP1.WinNumber = cursor.getInt(cursor.getColumnIndex("p1win"));
+				this.PlayerInfoP1.LoseNumber = cursor.getInt(cursor.getColumnIndex("p1lose"));
+				this.PlayerInfoP1.JDS = cursor.getInt(cursor.getColumnIndex("p1jds"));
+
+				this.PlayerInfoP2.LoseWin = cursor.getInt(cursor.getColumnIndex("p2sum"));
+				this.PlayerInfoP2.WinNumber = cursor.getInt(cursor.getColumnIndex("p2win"));
+				this.PlayerInfoP2.LoseNumber = cursor.getInt(cursor.getColumnIndex("p2lose"));
+				this.PlayerInfoP2.JDS = cursor.getInt(cursor.getColumnIndex("p2jds"));
+
+				this.PlayerInfoP3.LoseWin = cursor.getInt(cursor.getColumnIndex("p3sum"));
+				this.PlayerInfoP3.WinNumber = cursor.getInt(cursor.getColumnIndex("p3win"));
+				this.PlayerInfoP3.LoseNumber = cursor.getInt(cursor.getColumnIndex("p3lose"));
+				this.PlayerInfoP3.JDS = cursor.getInt(cursor.getColumnIndex("p3jds"));
+
+				this.PlayerInfoP4.LoseWin = cursor.getInt(cursor.getColumnIndex("p4sum"));
+				this.PlayerInfoP4.WinNumber = cursor.getInt(cursor.getColumnIndex("p4win"));
+				this.PlayerInfoP4.LoseNumber = cursor.getInt(cursor.getColumnIndex("p4lose"));
+				this.PlayerInfoP4.JDS = cursor.getInt(cursor.getColumnIndex("p4jds"));
+
+				String str1 = this.PlayerInfoP1.Name + "->" + "输赢:"+this.PlayerInfoP1.LoseWin+"赢:"+this.PlayerInfoP1.WinNumber+" 输:"+this.PlayerInfoP1.LoseNumber+" 金:"+this.PlayerInfoP1.JDS;
+				String str2 = this.PlayerInfoP2.Name + "->" + "输赢:"+this.PlayerInfoP2.LoseWin+"赢:"+this.PlayerInfoP2.WinNumber+" 输:"+this.PlayerInfoP2.LoseNumber+" 金:"+this.PlayerInfoP2.JDS;
+				String str3 = this.PlayerInfoP3.Name + "->" + "输赢:"+this.PlayerInfoP3.LoseWin+"赢:"+this.PlayerInfoP3.WinNumber+" 输:"+this.PlayerInfoP3.LoseNumber+" 金:"+this.PlayerInfoP3.JDS;
+				String str4 = this.PlayerInfoP4.Name + "->" + "输赢:"+this.PlayerInfoP4.LoseWin+"赢:"+this.PlayerInfoP4.WinNumber+" 输:"+this.PlayerInfoP4.LoseNumber+" 金:"+this.PlayerInfoP4.JDS;
+				Log.d("roger", str1);
+				Log.d("roger", str2);
+				Log.d("roger", str3);
+				Log.d("roger", str4);
+
+			}while(cursor.moveToNext());
+		}
+		cursor.close();		
+	}	
 }

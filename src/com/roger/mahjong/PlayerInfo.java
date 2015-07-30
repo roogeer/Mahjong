@@ -1,6 +1,9 @@
 package com.roger.mahjong;
 
 import java.util.ArrayList;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
@@ -24,13 +27,15 @@ public class PlayerInfo {
 	public String Name;								//玩家姓名
 	public ArrayList<Integer> lstRecordPerRound;	//记录游戏者每一把的输赢情况
 	public ArrayList<Integer> lstRecordPerSum;		//记录游戏者累计输赢情况
-	public int LostWin;								//记录游戏者当前的输赢金额
+	public int LoseWin;								//记录游戏者当前的输赢金额
 	public int JDS;									//所胡的金顶数
 	public int Rounds;								//游戏总局数
-	public int LostValue;							//输掉的最大数值
-	public int LostRound;							//最小数值出现的局数
+	public int LoseValue;							//输掉的最大数值
+	public int LoseRound;							//最小数值出现的局数
+	public int LoseNumber;							//输的局数
 	public int WinValue;							//赢得的最大数值
 	public int WinRound;							//最大数值出现的局数
+	public int WinNumber;							//赢的局数
 	public ArrayList<MyLine> lstLinesTemp;			//将要在屏幕上呈现的点，不含0值穿越判断
 	public ArrayList<MyLine> lstLines;				//将要在屏幕上呈现的点
 	private int ScreenWidth;						//屏幕的最大x轴坐标值
@@ -49,13 +54,15 @@ public class PlayerInfo {
 		this.Name="";
 		this.lstRecordPerRound = new ArrayList<Integer>();
 		this.lstRecordPerSum = new ArrayList<Integer>();
-		this.LostWin = 0;
+		this.LoseWin = 0;
 		this.JDS = 0;
 		this.Rounds=0;
-		this.LostValue=0;
-		this.LostRound=0;
+		this.LoseValue=0;
+		this.LoseRound=0;
+		this.LoseNumber=0;		
 		this.WinValue=0;
 		this.WinRound=0;
+		this.WinNumber=0;
 		this.lstLinesTemp = new ArrayList<PlayerInfo.MyLine>();
 		this.lstLines = new ArrayList<PlayerInfo.MyLine>();
 	}
@@ -69,7 +76,6 @@ public class PlayerInfo {
 			sum += x;
 			this.lstRecordPerSum.add(sum);
 		}
-		this.LostWin = sum;
 	}
 	
 	public void Prepare4Draw(int aScreenWidth)
@@ -86,9 +92,9 @@ public class PlayerInfo {
 		LostRound=1;
 		*/
 		WinValue = 0;
-		LostValue = 0;
+		LoseValue = 0;
 		WinRound = 0;
-		LostRound = 0;
+		LoseRound = 0;
 
 		//for(int i=1; i < lstRecordPerSum.size(); i++)
 		for(int i=0; i < lstRecordPerSum.size(); i++)
@@ -99,10 +105,10 @@ public class PlayerInfo {
 				WinValue = x;
 				WinRound = i + 1;
 			}
-			if(x < LostValue)
+			if(x < LoseValue)
 			{
-				LostValue = x;
-				LostRound = i + 1;
+				LoseValue = x;
+				LoseRound = i + 1;
 			}
 		}
 		
@@ -125,17 +131,17 @@ public class PlayerInfo {
 		{
 			zeroy = 0;
 		}
-		else if (LostValue>0)
+		else if (LoseValue>0)
 		{
 			zeroy = ScreenWidth;
 		}
 		else
 		{
-			zeroy = (int)(ScreenWidth*100/(WinValue-LostValue) * Math.abs((0-WinValue))/100);
+			zeroy = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((0-WinValue))/100);
 		}
 		
 		Log.i("roger", "WinValue"+String.valueOf(WinValue));
-		Log.i("roger", "LostValue"+String.valueOf(LostValue));
+		Log.i("roger", "LostValue"+String.valueOf(LoseValue));
 		ScreenYZero = zeroy;
 		int zerox = 0;
 		//取线段的两点出来判断是否穿越了0值点
@@ -224,9 +230,9 @@ public class PlayerInfo {
 		//Log.i("roger", "x0"+String.valueOf(x0));
 		int x1 = (int)((endPointSn-1) * (ScreenWidth*100/(this.Rounds-1))/100);
 		//Log.i("roger", "x1"+String.valueOf(x1));
-		int y0 = (int)(ScreenWidth*100/(WinValue-LostValue) * Math.abs((ValueA-WinValue))/100);
+		int y0 = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((ValueA-WinValue))/100);
 		//Log.i("roger", "y0"+String.valueOf(y0));
-		int y1 = (int)(ScreenWidth*100/(WinValue-LostValue) * Math.abs((ValueB-WinValue))/100);
+		int y1 = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((ValueB-WinValue))/100);
 		//Log.i("roger", "y1"+String.valueOf(y1));
 		return new MyLine(new Point(x0, y0), new Point(x1, y1), Color.RED);
 	}

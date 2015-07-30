@@ -159,24 +159,27 @@ public class MainActivity extends Activity implements InfoInputListener{
 	}
 	
 	public void onInfoInputComplete(String p1Name, String p2Name, String p3Name, String p4Name, String JDS)
-	{	
+	{
+		//将游戏初始信息存入数据库中
+		Utility.SaveGameRiqi();
+		save2DB(p1Name, p2Name, p3Name, p4Name, Integer.valueOf(JDS), Utility.LoadGameRiqi());
+		
 		String str = p1Name + "-" + p2Name + "-" + p3Name + "-" + p4Name + "-" + JDS;
 		Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
 		Bundle bundle=new Bundle();
 		bundle.putString("gameflag", "newgame");	//选择开始一局新的游戏
-		bundle.putString("playeronename", p1Name.substring(0,1));
-		bundle.putString("playertwoname", p2Name.substring(0,1));
-		bundle.putString("playerthreename", p3Name.substring(0,1));
-		bundle.putString("playerfourname", p4Name.substring(0,1));
+		bundle.putString("playeronename", p1Name);
+		bundle.putString("playertwoname", p2Name);
+		bundle.putString("playerthreename", p3Name);
+		bundle.putString("playerfourname", p4Name);
 		bundle.putInt("jds", Integer.valueOf(JDS));
+		bundle.putString("riqi", Utility.LoadGameRiqi());
 		Intent it=new Intent(MainActivity.this, Activity_NewGame.class);
 		it.putExtras(bundle);		
 		startActivity(it);
 		finish();
 		
-		//将游戏初始信息存入数据库中
-		Utility.SaveGameRiqi();
-		save2DB(p1Name, p2Name, p3Name, p4Name, Integer.valueOf(JDS), Utility.LoadGameRiqi());
+
 	}
 	
 	private void save2DB(String p1name, String p2name, String p3name, String p4name, int jds, String riqi)

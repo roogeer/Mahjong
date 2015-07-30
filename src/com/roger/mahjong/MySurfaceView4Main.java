@@ -88,7 +88,7 @@ public class MySurfaceView4Main extends SurfaceView implements Callback {
 			this.px = x;
 			this.py = y;
 			this.playerInfo = aPlayerInfo;
-			this.EndNumber = playerInfo.LostWin;
+			this.EndNumber = playerInfo.LoseWin;
 			this.absEndNumber = Math.abs(EndNumber);
 			isRun = true;
 		}
