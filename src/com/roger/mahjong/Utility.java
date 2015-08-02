@@ -11,7 +11,6 @@ public class Utility {
 	public static void SaveGameRiqi()
 	{
 		String riqi = (new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")).format(new Date());
-		Log.d("roger", riqi);
 		
 		SharedPreferences.Editor editor = MyApplication.getContext().getSharedPreferences("GameInfo", android.content.Context.MODE_PRIVATE).edit();
 		editor.putString("LastGameRiqi", riqi);

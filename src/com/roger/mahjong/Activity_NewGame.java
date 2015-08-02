@@ -27,7 +27,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 	public PlayerInfo PlayerInfoP3;
 	public PlayerInfo PlayerInfoP4;
 	//*************************
-	public int JDS;
+	public int JDVALUE;
 	public String riqi;
 	
 	//添加记录后，修改以下变量
@@ -75,11 +75,11 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP3 = new PlayerInfo();
 			PlayerInfoP4 = new PlayerInfo();
 			
-			PlayerInfoP1.Name=bundle.getString("playeronename");
-			PlayerInfoP2.Name=bundle.getString("playertwoname");
-			PlayerInfoP3.Name=bundle.getString("playerthreename");
-			PlayerInfoP4.Name= bundle.getString("playerfourname");
-			JDS = bundle.getInt("jds");
+			PlayerInfoP1.Name=bundle.getString("p1name");
+			PlayerInfoP2.Name=bundle.getString("p2name");
+			PlayerInfoP3.Name=bundle.getString("p3name");
+			PlayerInfoP4.Name= bundle.getString("p4name");
+			JDVALUE = bundle.getInt("jdvalue");
 			riqi = bundle.getString("riqi");
 			//intP1Data = 1;
 			
@@ -97,12 +97,12 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP3 = new PlayerInfo();
 			PlayerInfoP4 = new PlayerInfo();
 			
-			PlayerInfoP1.Name=bundle.getString("playeronename");
-			PlayerInfoP2.Name=bundle.getString("playertwoname");
-			PlayerInfoP3.Name=bundle.getString("playerthreename");
-			PlayerInfoP4.Name= bundle.getString("playerfourname");
+			PlayerInfoP1.Name=bundle.getString("p1name");
+			PlayerInfoP2.Name=bundle.getString("p2name");
+			PlayerInfoP3.Name=bundle.getString("p3name");
+			PlayerInfoP4.Name= bundle.getString("p4name");
 			
-			JDS = bundle.getInt("jds");
+			JDVALUE = bundle.getInt("jds");
 			riqi = bundle.getString("riqi");
 			//intP1Data = 1;
 			
@@ -112,10 +112,10 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			//20150217提取每一局的记录到各个玩家变量中
 			for (HashMap<String, String> hashMap: mylist)
 			{
-				PlayerInfoP1.lstRecordPerRound.add(Integer.valueOf(hashMap.get("playerOneData")));
-				PlayerInfoP2.lstRecordPerRound.add(Integer.valueOf(hashMap.get("playerTwoData")));
-				PlayerInfoP3.lstRecordPerRound.add(Integer.valueOf(hashMap.get("playerThreeData")));
-				PlayerInfoP4.lstRecordPerRound.add(Integer.valueOf(hashMap.get("playerFourData")));				
+				PlayerInfoP1.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p1value")));
+				PlayerInfoP2.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p2value")));
+				PlayerInfoP3.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p3value")));
+				PlayerInfoP4.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p4value")));				
 			}
 			PlayerInfoP1.Update4LostWin();
 			PlayerInfoP2.Update4LostWin();
@@ -130,28 +130,20 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP2.Rounds = SN;
 			PlayerInfoP3.Rounds = SN;
 			PlayerInfoP4.Rounds = SN;
+			
 			SN++;
-			//intP1Sum = bundle.getInt("p1sum");
-			//intP2Sum = bundle.getInt("p2sum");
-			//intP3Sum = bundle.getInt("p3sum");
-			//intP4Sum = bundle.getInt("p4sum");
+			
 			PlayerInfoP1.LoseWin = bundle.getInt("p1sum");
 			PlayerInfoP2.LoseWin = bundle.getInt("p2sum");
 			PlayerInfoP3.LoseWin = bundle.getInt("p3sum");
 			PlayerInfoP4.LoseWin = bundle.getInt("p4sum");			
 			
-			//intP1SumJds = bundle.getInt("playeronejds");
-			//intP2SumJds = bundle.getInt("playertwojds");
-			//intP3SumJds = bundle.getInt("playerthreejds");
-			//intP4SumJds = bundle.getInt("playerfourjds");
-			PlayerInfoP1.JDS = bundle.getInt("playeronejds");
-			PlayerInfoP2.JDS = bundle.getInt("playertwojds");
-			PlayerInfoP3.JDS = bundle.getInt("playerthreejds");
-			PlayerInfoP4.JDS = bundle.getInt("playerfourjds");			
+			PlayerInfoP1.JDS = bundle.getInt("p1jds");
+			PlayerInfoP2.JDS = bundle.getInt("p2jds");
+			PlayerInfoP3.JDS = bundle.getInt("p3jds");
+			PlayerInfoP4.JDS = bundle.getInt("p4jds");			
 		}
-		
-		//this.setTitle("New Game:"+playerOneName+" "+playerTwoName+" "+playerThreeName+" "+playerFourName+" "+ String.valueOf(JDS));
-		
+	
 		ActionBar actionBar = getActionBar();
 		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -159,15 +151,10 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		actionBar.setDisplayShowTitleEnabled(false);
 		
 		Tab Tab_Main = actionBar.newTab().setText("主");
-		//Tab Tab_P1 = actionBar.newTab().setText(playerOneName);
 		Tab Tab_P1 = actionBar.newTab().setText(PlayerInfoP1.Name);
-		
 		Tab Tab_P2 = actionBar.newTab().setText(PlayerInfoP2.Name);
-		
 		Tab Tab_P3 = actionBar.newTab().setText(PlayerInfoP3.Name);
-		
 		Tab Tab_P4 = actionBar.newTab().setText(PlayerInfoP4.Name);
-		
 		Tab Tab_Detail = actionBar.newTab().setText("详");
 
 		fragment_Main = new Fragment_Main();
@@ -445,22 +432,28 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP4.Rounds=PlayerInfoP4.lstRecordPerRound.size();
 			//*********************
 			
-			//存入ArrayList和数据库
+			//存入ArrayList
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("SN", Utility.FormatData1To9(String.valueOf(SN)));
-			map.put("playerOneData", String.valueOf(intP1));
-			map.put("playerTwoData", String.valueOf(intP2));
-			map.put("playerThreeData", String.valueOf(intP3));
-			map.put("playerFourData", String.valueOf(intP4));
+			map.put("p1value", String.valueOf(intP1));
+			map.put("p2value", String.valueOf(intP2));
+			map.put("p3value", String.valueOf(intP3));
+			map.put("p4value", String.valueOf(intP4));
 			//取时间
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 			Date curDate = new Date(System.currentTimeMillis());
-			Log.i("roger", formatter.format(curDate));
-			map.put("timeData", formatter.format(curDate));
+			map.put("shijian", formatter.format(curDate));
 			mylist.add(map);
+			
+			//更新PlayerInfo成员数据
+			PlayerInfoP1.Update4LostWin();
+			PlayerInfoP2.Update4LostWin();
+			PlayerInfoP3.Update4LostWin();
+			PlayerInfoP4.Update4LostWin();			
 			
 			//存入数据库中
 			writeInDatabase(intP1, intP2, intP3, intP4, formatter.format(curDate), riqi);
+			this.checkGameRec();
 			
 			SN++;
 
@@ -542,5 +535,26 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			}while(cursor.moveToNext());
 		}
 		cursor.close();		
+	}	
+	
+	private void checkGameRec()
+	{
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
+		SQLiteDatabase db=dbHelper.getWritableDatabase();
+		
+		Cursor cursor = db.rawQuery("select * from TableGameRec where riqi='"+ riqi +"'", null);
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				int p1value = cursor.getInt(cursor.getColumnIndex("p1value"));
+				int p2value = cursor.getInt(cursor.getColumnIndex("p2value"));
+				int p3value = cursor.getInt(cursor.getColumnIndex("p3value"));
+				int p4value = cursor.getInt(cursor.getColumnIndex("p4value"));
+				String riqi = cursor.getString(cursor.getColumnIndex("riqi"));
+				Log.d("roger", "东：" + p1value + " 南：" + p2value + " 西：" + p3value + " 北：" + p4value + " 日期：" + riqi);
+			}while(cursor.moveToNext());
+		}
+		cursor.close();
 	}	
 }

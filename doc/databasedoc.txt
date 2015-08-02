@@ -23,7 +23,7 @@ FOREIGN KEY(riqi) REFERENCES TableGameInfo(riqi)
 );
 
 3、###超牛B的视图ViwGameInfo，有了这个，后面的全都不需要了，程序逻辑也要跟着改
-CREATE VIEW "ViewGameInfo" AS select b.riqi,
+CREATE VIEW "ViewGameInfo" AS select b.riqi,a.jdvalue,
 a.p1name,b.p1sum,b.p1win,b.p1lose,b.p1jds,
 a.p2name,b.p2sum,b.p2win,b.p2lose,b.p2jds,
 a.p3name,b.p3sum,b.p3win,b.p3lose,b.p3jds,
@@ -48,7 +48,7 @@ sum(case when p4value>=TableGameInfo.jdvalue then 1 else 0 end) as p4jds
 from TableGameInfo inner join TableGameRec on TableGameInfo.riqi=TableGameRec.riqi 
 group by TableGameRec.riqi) as b 
 inner join
-(select riqi,p1name,p2name,p3name,p4name from TableGameInfo) as a 
+(select riqi,p1name,p2name,p3name,p4name,jdvalue from TableGameInfo) as a 
 on a.riqi=b.riqi
 
 ###测试数据
