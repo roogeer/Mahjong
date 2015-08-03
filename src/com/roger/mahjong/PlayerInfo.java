@@ -140,8 +140,8 @@ public class PlayerInfo {
 			zeroy = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((0-WinValue))/100);
 		}
 		
-		Log.i("roger", "WinValue"+String.valueOf(WinValue));
-		Log.i("roger", "LostValue"+String.valueOf(LoseValue));
+		//Log.i("roger", "WinValue"+String.valueOf(WinValue));
+		//Log.i("roger", "LostValue"+String.valueOf(LoseValue));
 		ScreenYZero = zeroy;
 		int zerox = 0;
 		//取线段的两点出来判断是否穿越了0值点
@@ -162,23 +162,23 @@ public class PlayerInfo {
 			x1 = tempLine.P1.x;
 			y1 = tempLine.P1.y;
 			
-			Log.i("roger", "count:"+String.valueOf(count++));
-			Log.i("roger", "x0:"+String.valueOf(x0));
-			Log.i("roger", "x1:"+String.valueOf(x1));
-			Log.i("roger", "y0:"+String.valueOf(y0));
-			Log.i("roger", "y1:"+String.valueOf(y1));
-			Log.i("roger", "zeroy:"+String.valueOf(zeroy));
+			//Log.i("roger", "count:"+String.valueOf(count++));
+			//Log.i("roger", "x0:"+String.valueOf(x0));
+			//Log.i("roger", "x1:"+String.valueOf(x1));
+			//Log.i("roger", "y0:"+String.valueOf(y0));
+			//Log.i("roger", "y1:"+String.valueOf(y1));
+			//Log.i("roger", "zeroy:"+String.valueOf(zeroy));
 
 			//y=kx+b
 			if( (y0 < zeroy) && (y1> zeroy) )
 			{
 				//从正值穿越到负值了
 				k=(float)((y1 - y0)*100.0/(x1-x0)/100.0);
-				Log.i("roger", "k:"+String.valueOf(k));
+				//Log.i("roger", "k:"+String.valueOf(k));
 				b=(int)(y1 - k * x1);
-				Log.i("roger", "b:"+String.valueOf(b));
+				//Log.i("roger", "b:"+String.valueOf(b));
 				zerox =(int)((zeroy - b)*100.0/k/100.0);
-				Log.i("roger", "zerox:"+String.valueOf(zerox));
+				//Log.i("roger", "zerox:"+String.valueOf(zerox));
 				lstLines.add(new MyLine(new Point(x0, y0), new Point(zerox,zeroy), Color.RED));
 				lstLines.add(new MyLine(new Point(zerox, zeroy), new Point(x1,y1), Color.GREEN));
 			}
@@ -186,11 +186,11 @@ public class PlayerInfo {
 			{
 				//从负值穿越到正值了
 				k=(float)((y1 - y0)*100.0/(x1-x0)/100.0);
-				Log.i("roger", "k:"+String.valueOf(k));				
+				//Log.i("roger", "k:"+String.valueOf(k));				
 				b=(int)(y1 - k * x1);
-				Log.i("roger", "b:"+String.valueOf(b));				
+				//Log.i("roger", "b:"+String.valueOf(b));				
 				zerox =(int)((zeroy - b)*100/k/100);
-				Log.i("roger", "zerox:"+String.valueOf(zerox));				
+				//Log.i("roger", "zerox:"+String.valueOf(zerox));				
 				lstLines.add(new MyLine(new Point(x0, y0), new Point(zerox,zeroy), Color.GREEN));
 				lstLines.add(new MyLine(new Point(zerox, zeroy), new Point(x1,y1), Color.RED));				
 			}

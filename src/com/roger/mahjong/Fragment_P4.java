@@ -29,9 +29,25 @@ public class Fragment_P4 extends Fragment {
 		return new MySurfaceView(this.getActivity(), activity_NewGame.PlayerInfoP4);		
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		
+		//为了指示宿主activity，当前显示的是哪个fragment
+		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
+		activity_NewGame.FragmentFlag=4;		
+	}
+
+
 	public void onStop()
 	{
 		Log.i("Fragment_P4", "-->onStop");		
 		super.onStop();
 	}
+	
+	public void updata()
+	{
+		Log.i("roger", "当前页面是[北]");		
+	}	
 }

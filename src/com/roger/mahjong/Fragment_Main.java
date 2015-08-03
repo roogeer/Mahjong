@@ -45,9 +45,10 @@ public class Fragment_Main extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		//Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
-		//updata();
-		//activity_NewGame.FragmentFlag=0;		
+		
+		//为了指示宿主activity，当前显示的是哪个fragment
+		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
+		activity_NewGame.FragmentFlag=0;		
 	}
 	
 	public void onStop()
@@ -58,14 +59,6 @@ public class Fragment_Main extends Fragment {
 	
 	public void updata()
 	{
-		/*
-		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();
-		tvMain = (TextView)getView().findViewById(R.id.tvMain);
-		String str = activity_NewGame.playerOneName + ": " + String.valueOf(activity_NewGame.intP1Sum) + "\n";
-		str +=activity_NewGame.playerTwoName + ": " + String.valueOf(activity_NewGame.intP2Sum) + "\n";
-		str +=activity_NewGame.playerThreeName + ": " + String.valueOf(activity_NewGame.intP3Sum) + "\n";		
-		str +=activity_NewGame.playerFourName + ": " + String.valueOf(activity_NewGame.intP4Sum);		
-		tvMain.setText(str);
-		*/		
+		Log.i("roger", "当前页面是[主]");		
 	}
 }

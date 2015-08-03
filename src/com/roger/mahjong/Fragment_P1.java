@@ -17,7 +17,6 @@ public class Fragment_P1 extends Fragment {
 		//System.out.println("Fragmen_A-->onCreate");
 		Log.i("Fragment_P1", "onCreate");
 		super.onCreate(savedInstanceState);
-		
 	}
 	
 
@@ -25,10 +24,8 @@ public class Fragment_P1 extends Fragment {
 	{
 		//System.out.println("Fragment_A-->onCreateView");
 		Log.i("Fragment_P1", "onCreateView");
-		//return inflater.inflate(R.layout.tab_p1,container,false);
+
 		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
-		//return new MySurfaceView(this.getActivity(), activity_NewGame.intP1Sum);		
-		//return new MySurfaceView(this.getActivity(), activity_NewGame.PlayerInfoP1.LostWin);
 		return new MySurfaceView(this.getActivity(), activity_NewGame.PlayerInfoP1);
 	}
 	
@@ -36,14 +33,10 @@ public class Fragment_P1 extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		/*
-		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();
-		tvP1 = (TextView)getView().findViewById(R.id.tvP1);
-		tvP1.setText(String.valueOf(activity_NewGame.intP1Data));
-		activity_NewGame.intP1Data++;
+		
 		//为了指示宿主activity，当前显示的是哪个fragment
+		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
 		activity_NewGame.FragmentFlag=1;
-		*/
 	}
 
 	public void onStop()
@@ -54,8 +47,8 @@ public class Fragment_P1 extends Fragment {
 	
 	public void updata()
 	{
-		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
-		tvP1 = (TextView)getView().findViewById(R.id.tvP1);
-		tvP1.setText(activity_NewGame.p1Value);
+		Log.i("roger", "当前页面是[东]");
+		
+		//这里应该是调用P1页面的重绘方法
 	}
 }

@@ -468,16 +468,16 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			fragment_P1.updata();
 			break;
 		case 2:
-			//fragment_P2.updata();
+			fragment_P2.updata();
 			break;
 		case 3:
-			//fragment_P3.updata();
+			fragment_P3.updata();
 			break;
 		case 4:
-			//fragment_P4.updata();
+			fragment_P4.updata();
 			break;
 		case 5:
-			//fragment_Detail.updata();
+			fragment_Detail.updata();
 			break;			
 		}
 	}
@@ -559,4 +559,13 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		cursor.close();
 		db.close();
 	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		Log.i("roger", "onPause() in Activity_NewGame.java");
+	}
+	
+	
 }

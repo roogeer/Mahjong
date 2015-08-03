@@ -18,7 +18,7 @@ public class Fragment_Detail extends Fragment {
 	public void onCreate(Bundle savedInstanceState)
 	{
 		//System.out.println("Fragmen_Detail-->onCreate");
-		Log.i("Fragment_Detail", "-->onCreate");
+		Log.i("roger", "Fragment_Detail-->onCreate");
 		super.onCreate(savedInstanceState);
 	}
 	
@@ -26,7 +26,7 @@ public class Fragment_Detail extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		//System.out.println("Fragment_Detail-->onCreateView");
-		Log.i("Fragment_Detail", "-->onCreateView");
+		Log.i("roger", "Fragment_Detail-->onCreateView");
 		return inflater.inflate(R.layout.tab_detail,container,false);
 	}
 	
@@ -34,11 +34,10 @@ public class Fragment_Detail extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		Log.i("Fragment_Detail", "-->onActivityCreated");		
-		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
-		//tvDetail = (TextView)getView().findViewById(R.id.tvDetail);
-		//tvDetail.setText(activity_NewGame.strDetail);
+		Log.i("roger", "Fragment_Detail-->onActivityCreated");
+		
 		//为了指示宿主activity，当前显示的是哪个fragment		
+		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();		
 		activity_NewGame.FragmentFlag=5;
 		
 		dataCount = activity_NewGame.mylist.size();
@@ -48,21 +47,25 @@ public class Fragment_Detail extends Fragment {
 		adapter = new DataAdapter(getActivity(), activity_NewGame.mylist);
 		listView.setAdapter(adapter);
 	}
+	
+	
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		Log.i("roger", "onPause() in Fragment_Detail");
+	}
+
 
 	public void onStop()
 	{
-		Log.i("Fragment_Detail", "-->onStop");		
+		Log.i("roger", "Fragment_Detail-->onStop");		
 		super.onStop();
 	}
 	
 	public void updata()
 	{
-		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();
-		//tvDetail = (TextView)getView().findViewById(R.id.tvDetail);
-		//String tempString = tvDetail.getText().toString().trim()+"\n"+activity_NewGame.strDetail;
-		//Log.i("roger", "before setText");
-		//Log.i("roger", activity_NewGame.strDetail);
-		//tvDetail.setText(activity_NewGame.strDetail);
-		Log.i("roger", "end of setText");
+		Log.i("roger", "当前页面是[详]");
 	}	
 }
