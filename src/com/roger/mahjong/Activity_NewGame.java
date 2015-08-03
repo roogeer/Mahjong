@@ -534,7 +534,8 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 
 			}while(cursor.moveToNext());
 		}
-		cursor.close();		
+		cursor.close();	
+		db.close();
 	}	
 	
 	private void checkGameRec()
@@ -556,5 +557,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			}while(cursor.moveToNext());
 		}
 		cursor.close();
-	}	
+		db.close();
+	}
 }

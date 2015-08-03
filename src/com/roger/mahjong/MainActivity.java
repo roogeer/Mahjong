@@ -155,6 +155,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 			}while(cursor.moveToNext());
 		}
 		cursor.close();
+		db.close();
 		bundle.putSerializable("xlist", mylist);
 		
 		Intent it=new Intent(MainActivity.this, Activity_NewGame.class);
@@ -165,6 +166,9 @@ public class MainActivity extends Activity implements InfoInputListener{
 	
 	public void onInfoInputComplete(String p1Name, String p2Name, String p3Name, String p4Name, String jdvalue)
 	{
+		//取最后一次存的游戏信息日期，如果对应的TableGameRec记录为0，则将这条记录从TableGameInfo表中删除
+		clearGameInfo();
+		
 		//将游戏初始信息存入数据库中
 		Utility.SaveGameRiqi();
 		save2DB(p1Name, p2Name, p3Name, p4Name, Integer.valueOf(jdvalue), Utility.LoadGameRiqi());
@@ -183,6 +187,31 @@ public class MainActivity extends Activity implements InfoInputListener{
 		it.putExtras(bundle);		
 		startActivity(it);
 		finish();
+	}
+	
+	private void clearGameInfo()
+	{
+		//如果只是创建了游戏信息，而没有一条游戏局数的记录，则删除这条游戏信息记录
+		int count = 0;
+		
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
+		SQLiteDatabase db=dbHelper.getWritableDatabase();		
+	
+		Cursor cursor = db.rawQuery("SELECT COUNT(riqi) as count FROM ViewGameInfo WHERE riqi='" + Utility.LoadGameRiqi() + "'", null);
+		cursor.moveToFirst();
+		count = cursor.getInt(cursor.getColumnIndex("count"));
+		Log.d("roger", "记录的条数为：" + count);
+		cursor.close();		
+		
+		if(0==count)
+		{
+			//没有详细有游戏局数记录，可以删除这一条游戏信息记录
+			db=dbHelper.getWritableDatabase();
+			Log.i("roger", "TableGameInfo中删除前的记录条数为：" + checkGameInfoCount());
+			db.execSQL("DELETE FROM TableGameInfo WHERE riqi='" + Utility.LoadGameRiqi() + "'");
+			Log.i("roger", "TableGameInfo中删除后的记录条数为：" + checkGameInfoCount());
+		}
+		db.close();
 	}
 	
 	private void save2DB(String p1name, String p2name, String p3name, String p4name, int jds, String riqi)
@@ -222,6 +251,22 @@ public class MainActivity extends Activity implements InfoInputListener{
 			}while(cursor.moveToNext());
 		}
 		cursor.close();
+		db.close();
+	}
+	
+	private int checkGameInfoCount()
+	{
+		int result = 0;
+		
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
+		SQLiteDatabase db=dbHelper.getWritableDatabase();
+		
+		Cursor cursor = db.rawQuery("SELECT COUNT(riqi) as count FROM TableGameInfo", null);
+		cursor.moveToFirst();
+		result = cursor.getInt(cursor.getColumnIndex("count"));
+		cursor.close();
+		db.close();
+		return result;
 	}
 }
 
