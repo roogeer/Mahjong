@@ -10,6 +10,7 @@ import com.roger.mahjong.DialogFragment_Add.AddInputListener;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.database.Cursor;
@@ -465,7 +466,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			fragment_Main.updata();
 			break;
 		case 1:
-			fragment_P1.updata();
+			fragment_P1.updata(fragment_P1);
 			break;
 		case 2:
 			fragment_P2.updata();

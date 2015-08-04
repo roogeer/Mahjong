@@ -18,8 +18,6 @@ import android.view.Window;
 public class MySurfaceView extends SurfaceView implements Callback {
 	private SurfaceHolder holder;
 	private Context context;
-	//private int PlayerValue;
-	//private String strPlayerValue;
 	private int ScreenWidth;
 	private int ScreenHeight;
 	private int myTextSize;
@@ -30,51 +28,53 @@ public class MySurfaceView extends SurfaceView implements Callback {
 	{
 		super(aContext);
 		
+		Log.i("roger", "MySurfaceView¹¹Ôìº¯Êý, name:"+aPlayerInfo.Name);
+		
 		context=aContext;
 		Rect outRect = new Rect();
 		((Activity)context).getWindow().findViewById(Window.ID_ANDROID_CONTENT).getDrawingRect(outRect);
 		ScreenWidth = outRect.width();
 		ScreenHeight = outRect.height();
-		myTextSize = 40*ScreenWidth/480;
+		myTextSize = Utility.GetTextSizeFactor();
 		playerInfo = aPlayerInfo;
 		playerInfo.Prepare4Draw(ScreenWidth);	
 		holder = this.getHolder();
 		holder.addCallback(this);
 	}
-	
-	/*
-	public MySurfaceView(Context aContext, int aPlayerValue)
-	{
-		super(aContext);
-		
-		context=aContext;
-		Rect outRect = new Rect();
-		((Activity)context).getWindow().findViewById(Window.ID_ANDROID_CONTENT).getDrawingRect(outRect);
-		ScreenWidth = outRect.width();
-		ScreenHeight = outRect.height();
-		myTextSize = 160*ScreenWidth/480;
-		
-		//PlayerValue=aPlayerValue;
-		holder = this.getHolder();
-		holder.addCallback(this);
-	}
-	*/
-	
+
 	@Override
 	public void surfaceChanged(SurfaceHolder holder,int format,int width,int height) {
 		// TODO Auto-generated method stub
-
+		Log.i("roger", "in surfaceChanged()");
+	}
+	
+	@Override
+	public void draw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		super.draw(canvas);
+		Log.i("roger", "in draw()");
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
+		Log.i("roger", "in surFaceCreated()");
+		
 		Canvas c = null;
 		try
 		{
 			synchronized (holder)
 			{
 				c = holder.lockCanvas();
+				if(null==c)
+				{
+					Log.i("roger", "Canvase==null");
+				}
+				else
+				{
+					Log.i("roger", "Canvase!=null");
+				}
+				
 				//int canvasHeight = c.getHeight();
 				//int canvasWidth = c.getWidth();
 				
@@ -275,7 +275,6 @@ public class MySurfaceView extends SurfaceView implements Callback {
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-
+		Log.i("roger", "in surfaceDestroyed()");
 	}
-
 }
