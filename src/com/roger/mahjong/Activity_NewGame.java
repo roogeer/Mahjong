@@ -137,12 +137,17 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP1.LoseWin = bundle.getInt("p1sum");
 			PlayerInfoP2.LoseWin = bundle.getInt("p2sum");
 			PlayerInfoP3.LoseWin = bundle.getInt("p3sum");
-			PlayerInfoP4.LoseWin = bundle.getInt("p4sum");			
+			PlayerInfoP4.LoseWin = bundle.getInt("p4sum");
 			
+			PlayerInfoP1.WinNumber = bundle.getInt("p1win");
+			PlayerInfoP2.WinNumber = bundle.getInt("p2win");
+			PlayerInfoP3.WinNumber = bundle.getInt("p3win");
+			PlayerInfoP4.WinNumber = bundle.getInt("p4win");
+
 			PlayerInfoP1.JDS = bundle.getInt("p1jds");
 			PlayerInfoP2.JDS = bundle.getInt("p2jds");
 			PlayerInfoP3.JDS = bundle.getInt("p3jds");
-			PlayerInfoP4.JDS = bundle.getInt("p4jds");			
+			PlayerInfoP4.JDS = bundle.getInt("p4jds");
 		}
 	
 		ActionBar actionBar = getActionBar();
@@ -466,7 +471,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			fragment_Main.updata();
 			break;
 		case 1:
-			fragment_P1.updata(fragment_P1);
+			fragment_P1.updata();
 			break;
 		case 2:
 			fragment_P2.updata();

@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 public class Fragment_P1 extends Fragment {
 	// TODO Auto-generated constructor stub
-	private TextView tvP1;
-	
+
 	public void onCreate(Bundle savedInstanceState)
 	{
 		//System.out.println("Fragmen_A-->onCreate");
@@ -52,10 +51,10 @@ public class Fragment_P1 extends Fragment {
 		super.onStop();
 	}
 
-	public void updata(Fragment fragment)
+	public void updata()
 	{
 		Log.i("roger", "当前页面是[东]");
-		
+		/*
 		//这里应该是调用P1页面的重绘方法
 		if(fragment!=null)
 		{
@@ -71,5 +70,6 @@ public class Fragment_P1 extends Fragment {
 		ft.remove(fragment);
 		ft.replace(R.id.context, fragment, null);
 		ft.commit();
+		*/
 	}
 }

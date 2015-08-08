@@ -7,30 +7,6 @@ import android.util.Log;
 
 public class MahjongDatabaseHelper extends SQLiteOpenHelper {
 
-/*
-	final String CREATE_TABLE_GameRec_LastInfo = "create table GameRec_LastInfo(" +
-			"_id integer primary key autoincrement," +
-			"p1name varchar(8)," +
-			"p1jds integer," +
-			"p2name varchar(8)," +
-			"p2jds integer," +
-			"p3name varchar(8)," +
-			"p3jds integer," +
-			"p4name varchar(8)," +
-			"p4jds integer," +
-			"jds integer" +
-			")";
-	
-	final String CREATE_TABLE_GameRec_LastDetail = "create table GameRec_LastDetail(" +
-			"_id integer primary key autoincrement," +
-			"p1data integer," +
-			"p2data integer," +
-			"p3data integer," +
-			"p4data integer," +
-			"shijian varchar(8)" +
-			")";
-*/
-	
 	final String CREATE_TableGameInfo = "CREATE TABLE TableGameInfo(" +
 			 "p1name TEXT," +
 			 "p2name TEXT," +
@@ -51,7 +27,7 @@ public class MahjongDatabaseHelper extends SQLiteOpenHelper {
 			"FOREIGN KEY(riqi) REFERENCES TableGameInfo(riqi)" +
 			")";
 			
-	final String CREATE_ViewGameInfo = "CREATE VIEW 'ViewGameInfo' AS select b.riqi,a.jdvalue," +
+	final String CREATE_ViewGameInfo = "CREATE VIEW 'ViewGameInfo' AS select a.rowid,b.riqi,a.jdvalue," +
 			"a.p1name,b.p1sum,b.p1win,b.p1lose,b.p1jds," +
 			"a.p2name,b.p2sum,b.p2win,b.p2lose,b.p2jds," +
 			"a.p3name,b.p3sum,b.p3win,b.p3lose,b.p3jds," +
@@ -76,8 +52,8 @@ public class MahjongDatabaseHelper extends SQLiteOpenHelper {
 			"from TableGameInfo inner join TableGameRec on TableGameInfo.riqi=TableGameRec.riqi " +
 			"group by TableGameRec.riqi) as b " +
 			"inner join " +
-			"(select riqi,p1name,p2name,p3name,p4name,jdvalue from TableGameInfo) as a " +
-			"on a.riqi=b.riqi";
+			"(select rowid,riqi,p1name,p2name,p3name,p4name,jdvalue from TableGameInfo) as a " +
+			"on a.riqi=b.riqi order by a.rowid";
 	
 	public MahjongDatabaseHelper(Context context, String databaseName, int version)
 	{

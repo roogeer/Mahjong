@@ -107,7 +107,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 		bundle.putInt("p1sum", cursor.getInt(cursor.getColumnIndex("p1sum")));
 		bundle.putInt("p1win", cursor.getInt(cursor.getColumnIndex("p1win")));
 		bundle.putInt("p1lose", cursor.getInt(cursor.getColumnIndex("p1lose")));
-		bundle.putInt("pljds", cursor.getInt(cursor.getColumnIndex("p1jds")));
+		bundle.putInt("p1jds", cursor.getInt(cursor.getColumnIndex("p1jds")));
 
 		bundle.putString("p2name", cursor.getString(cursor.getColumnIndex("p2name")));
 		bundle.putInt("p2sum", cursor.getInt(cursor.getColumnIndex("p2sum")));

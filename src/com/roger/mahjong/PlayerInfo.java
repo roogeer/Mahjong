@@ -140,8 +140,6 @@ public class PlayerInfo {
 			zeroy = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((0-WinValue))/100);
 		}
 		
-		//Log.i("roger", "WinValue"+String.valueOf(WinValue));
-		//Log.i("roger", "LostValue"+String.valueOf(LoseValue));
 		ScreenYZero = zeroy;
 		int zerox = 0;
 		//取线段的两点出来判断是否穿越了0值点
@@ -152,7 +150,6 @@ public class PlayerInfo {
 		float k;
 		int b;
 		
-		int count =1;
 		lstLines.clear();
 		
 		for (MyLine tempLine : lstLinesTemp)
@@ -162,23 +159,13 @@ public class PlayerInfo {
 			x1 = tempLine.P1.x;
 			y1 = tempLine.P1.y;
 			
-			//Log.i("roger", "count:"+String.valueOf(count++));
-			//Log.i("roger", "x0:"+String.valueOf(x0));
-			//Log.i("roger", "x1:"+String.valueOf(x1));
-			//Log.i("roger", "y0:"+String.valueOf(y0));
-			//Log.i("roger", "y1:"+String.valueOf(y1));
-			//Log.i("roger", "zeroy:"+String.valueOf(zeroy));
-
 			//y=kx+b
 			if( (y0 < zeroy) && (y1> zeroy) )
 			{
 				//从正值穿越到负值了
 				k=(float)((y1 - y0)*100.0/(x1-x0)/100.0);
-				//Log.i("roger", "k:"+String.valueOf(k));
 				b=(int)(y1 - k * x1);
-				//Log.i("roger", "b:"+String.valueOf(b));
 				zerox =(int)((zeroy - b)*100.0/k/100.0);
-				//Log.i("roger", "zerox:"+String.valueOf(zerox));
 				lstLines.add(new MyLine(new Point(x0, y0), new Point(zerox,zeroy), Color.RED));
 				lstLines.add(new MyLine(new Point(zerox, zeroy), new Point(x1,y1), Color.GREEN));
 			}
@@ -186,11 +173,8 @@ public class PlayerInfo {
 			{
 				//从负值穿越到正值了
 				k=(float)((y1 - y0)*100.0/(x1-x0)/100.0);
-				//Log.i("roger", "k:"+String.valueOf(k));				
 				b=(int)(y1 - k * x1);
-				//Log.i("roger", "b:"+String.valueOf(b));				
 				zerox =(int)((zeroy - b)*100/k/100);
-				//Log.i("roger", "zerox:"+String.valueOf(zerox));				
 				lstLines.add(new MyLine(new Point(x0, y0), new Point(zerox,zeroy), Color.GREEN));
 				lstLines.add(new MyLine(new Point(zerox, zeroy), new Point(x1,y1), Color.RED));				
 			}
@@ -214,26 +198,12 @@ public class PlayerInfo {
 	
 	private MyLine CalculateLine(int SN, int ValueA, int ValueB)
 	{
-		/*
-		Log.i("roger", "ValueA"+String.valueOf(ValueA));
-		Log.i("roger", "ValueB"+String.valueOf(ValueB));
-		Log.i("roger", "WinValue"+String.valueOf(WinValue));
-		Log.i("roger", "LostValue"+String.valueOf(LostValue));
-		Log.i("roger", "ScreenWidth"+String.valueOf(ScreenWidth));
-		Log.i("roger", "Rounds"+String.valueOf(this.Rounds));
-		*/
 		int beginPointSn= SN -1;
-		//Log.i("roger", "beginPointSn"+String.valueOf(beginPointSn));
 		int endPointSn = SN;
-		//Log.i("roger", "endPointSn"+String.valueOf(endPointSn));
 		int x0 = (int)((beginPointSn-1) * (ScreenWidth*100/(this.Rounds-1))/100);
-		//Log.i("roger", "x0"+String.valueOf(x0));
 		int x1 = (int)((endPointSn-1) * (ScreenWidth*100/(this.Rounds-1))/100);
-		//Log.i("roger", "x1"+String.valueOf(x1));
 		int y0 = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((ValueA-WinValue))/100);
-		//Log.i("roger", "y0"+String.valueOf(y0));
 		int y1 = (int)(ScreenWidth*100/(WinValue-LoseValue) * Math.abs((ValueB-WinValue))/100);
-		//Log.i("roger", "y1"+String.valueOf(y1));
 		return new MyLine(new Point(x0, y0), new Point(x1, y1), Color.RED);
 	}
 }
