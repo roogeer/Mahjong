@@ -158,9 +158,8 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						c.drawLine(WindowWidth-1, 0, 0, 0, p);						
 
 						// 画0值点坐标
-						p.setColor(Color.GRAY);
-						c.drawLine(0, playerInfo.ScreenYZero, WindowWidth - 1,
-								playerInfo.ScreenYZero, p);
+						//p.setColor(Color.GRAY);
+						//c.drawLine(0, playerInfo.ScreenYZero, WindowWidth - 1, playerInfo.ScreenYZero, p);
 						/*
 						 * int y0=0; for (int x : playerInfo.lstRecordPerSum) {
 						 * c.drawText(String.valueOf(x), 100, 10+y0*20, p);
@@ -196,12 +195,14 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						}
 
 						// 显示信息统计
+						int rowY = 60;	// 第1行信息的Y坐标值
+						
 						if(null == paint)
 							initPaint();
 						float outputStrWidth = 0;
 						float nextOutputX = 10;
 						String outputStr = playerInfo.Name+":";
-						c.drawText(outputStr, nextOutputX, WindowHeight + 50, paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;
 						
@@ -217,7 +218,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						{
 							paint.setColor(Color.GRAY);
 						}
-						c.drawText(String.valueOf(playerInfo.LoseWin), nextOutputX, WindowHeight + 50 , paint);
+						c.drawText(String.valueOf(playerInfo.LoseWin), nextOutputX, WindowHeight + rowY , paint);
 						
 						paint.setColor(Color.GRAY);
 						outputStr = "HP:";
@@ -226,7 +227,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						
 						nextOutputX = (nextoutputX1 > paint.measureText("HP:-888/8888")?nextoutputX1:nextoutputX2);
 						float rightSideX = nextOutputX;	//第2行信息输出时，右侧也使用这个x坐标值
-						c.drawText(outputStr, nextOutputX, WindowHeight + 50 , paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY , paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth; 						
 						
@@ -243,13 +244,13 @@ public class MySurfaceView extends SurfaceView implements Callback {
 							paint.setColor(Color.GRAY);
 						}
 						outputStr = String.valueOf(playerInfo.LoseValue);
-						c.drawText(outputStr, nextOutputX, WindowHeight + 50 , paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;						
 						
 						paint.setColor(Color.GRAY);
 						outputStr = "/";
-						c.drawText(outputStr, nextOutputX, WindowHeight + 50 , paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;						
 						
@@ -266,14 +267,15 @@ public class MySurfaceView extends SurfaceView implements Callback {
 							paint.setColor(Color.GRAY);
 						}
 						outputStr = String.valueOf(playerInfo.WinValue);
-						c.drawText(outputStr, nextOutputX, WindowHeight + 50 , paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						
 						//第2行信息输出
+						rowY += 100;	//第2行信息的Y坐标值 
 						paint.setColor(Color.GRAY);
 						outputStrWidth = 0;
 						nextOutputX = 10;
 						outputStr = "Lv:";
-						c.drawText(outputStr, nextOutputX, WindowHeight + 150, paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;
 						
@@ -282,34 +284,45 @@ public class MySurfaceView extends SurfaceView implements Callback {
 							paint.setColor(Color.RED);
 						}
 						outputStr = String.valueOf(playerInfo.WinNumber);
-						c.drawText(outputStr, nextOutputX, WindowHeight + 150, paint);
-						
-						paint.setColor(Color.GRAY);
-						nextOutputX = rightSideX;
-						outputStr = "MP:";
-						c.drawText(outputStr, nextOutputX, WindowHeight + 150, paint);
-						outputStrWidth = paint.measureText(outputStr);
-						nextOutputX += outputStrWidth;
-						
-						outputStr = String.valueOf(playerInfo.LoseRound);
-						c.drawText(outputStr, nextOutputX, WindowHeight + 150, paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;
 						
 						outputStr = "/";
-						c.drawText(outputStr, nextOutputX, WindowHeight + 150, paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
+						outputStrWidth = paint.measureText(outputStr);
+						nextOutputX += outputStrWidth;
+						
+						outputStr = String.valueOf(playerInfo.Rounds);;
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);						
+						
+						paint.setColor(Color.GRAY);
+						nextOutputX = rightSideX;
+						outputStr = "MP:";
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
+						outputStrWidth = paint.measureText(outputStr);
+						nextOutputX += outputStrWidth;
+						
+						outputStr = String.valueOf(playerInfo.LoseRound);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
+						outputStrWidth = paint.measureText(outputStr);
+						nextOutputX += outputStrWidth;
+						
+						outputStr = "/";
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;
 						
 						outputStr = String.valueOf(playerInfo.WinRound);
-						c.drawText(outputStr, nextOutputX, WindowHeight + 150, paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						
 						//第3行信息输出
+						rowY +=100;		//第3行信息的Y坐标值
 						paint.setColor(Color.GRAY);
 						outputStrWidth = 0;
 						nextOutputX = 10;						
 						outputStr = "ESP:";
-						c.drawText(outputStr, nextOutputX, WindowHeight + 250, paint);
+						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
 						nextOutputX += outputStrWidth;
 
@@ -317,7 +330,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						{
 							paint.setColor(Color.GRAY);							
 							outputStr = "--";
-							c.drawText(outputStr, nextOutputX, WindowHeight + 250, paint);							
+							c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);							
 						}
 						else
 						{
@@ -325,7 +338,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 							for (int i = 0; i < playerInfo.JDS; i++) {
 								outputStr = "▲ ";
 								c.drawText(outputStr, nextOutputX,
-										WindowHeight + 250, paint);
+										WindowHeight + rowY, paint);
 								outputStrWidth = paint.measureText(outputStr);
 								nextOutputX += outputStrWidth;
 							}

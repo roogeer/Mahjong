@@ -94,9 +94,14 @@ public class PlayerInfo {
 		WinValue = 0;
 		LoseValue = 0;
 		WinRound = 0;
-		LoseRound = 0;
-
+		LoseRound = 1;
+		LoseRound = 1;
+		
 		//for(int i=1; i < lstRecordPerSum.size(); i++)
+		WinValue = lstRecordPerSum.get(0);
+		LoseValue = lstRecordPerSum.get(0);
+		WinRound = 1;
+		
 		for(int i=0; i < lstRecordPerSum.size(); i++)
 		{
 			int x = lstRecordPerSum.get(i);
