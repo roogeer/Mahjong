@@ -3,7 +3,9 @@ package com.roger.mahjong;
 import java.util.Date;
 
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
 
 
 public class Utility {
@@ -26,6 +28,21 @@ public class Utility {
 	public static int GetTextSizeFactor()
 	{
 		return 20;
+	}
+	
+	public static float GetTextSizeFactor(int ActivityWidth)
+	{
+		float result = 0;
+		switch(ActivityWidth)
+		{
+		case 720:
+			result = 1;
+			break;
+		case 1080:
+			result = 1.5f;
+			break;			
+		}
+		return result;
 	}
 
 	public static String FormatData1To9(String numStr)

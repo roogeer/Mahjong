@@ -84,7 +84,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 		
 		ArrayList<HashMap<String, String>> mylist;
 		
-		Toast.makeText(getApplicationContext(), "好的继续", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "好的继续", Toast.LENGTH_SHORT).show();
 		//从数据库中读取记录，包装好后，启动Activity_NewGame
 		
 		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);

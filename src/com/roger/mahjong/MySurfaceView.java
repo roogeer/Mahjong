@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.Window;
+import android.widget.Toast;
 
 public class MySurfaceView extends SurfaceView implements Callback {
 	private SurfaceHolder holder;
@@ -23,6 +24,8 @@ public class MySurfaceView extends SurfaceView implements Callback {
 	private int WindowWidth;
 	private int WindowHeight;
 	private int myTextSize;
+	
+	private float textSizeFactor;
 	
 	private boolean runFlag = true;
 	private Thread myThread;
@@ -84,7 +87,8 @@ public class MySurfaceView extends SurfaceView implements Callback {
 	private void initPaint()
 	{
 		paint = new Paint();
-		paint.setTextSize(Utility.GetTextSizeFactor()*3);
+		//paint.setTextSize(Utility.GetTextSizeFactor()*3);
+		paint.setTextSize(Utility.GetTextSizeFactor()* 3 * Utility.GetTextSizeFactor(ScreenWidth));
 		paint.setColor(Color.GRAY);
 	}
 	
@@ -195,12 +199,12 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						}
 
 						// 显示信息统计
-						int rowY = 60;	// 第1行信息的Y坐标值
+						float rowY = 60 * Utility.GetTextSizeFactor(ScreenWidth);	// 第1行信息的Y坐标值
 						
 						if(null == paint)
 							initPaint();
 						float outputStrWidth = 0;
-						float nextOutputX = 10;
+						float nextOutputX = 10 * Utility.GetTextSizeFactor(ScreenWidth);
 						String outputStr = playerInfo.Name+":";
 						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						outputStrWidth = paint.measureText(outputStr);
@@ -270,7 +274,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						
 						//第2行信息输出
-						rowY += 100;	//第2行信息的Y坐标值 
+						rowY += 100 * Utility.GetTextSizeFactor(ScreenWidth);	//第2行信息的Y坐标值 
 						paint.setColor(Color.GRAY);
 						outputStrWidth = 0;
 						nextOutputX = 10;
@@ -317,7 +321,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 						c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);
 						
 						//第3行信息输出
-						rowY +=100;		//第3行信息的Y坐标值
+						rowY +=100 * Utility.GetTextSizeFactor(ScreenWidth);		//第3行信息的Y坐标值
 						paint.setColor(Color.GRAY);
 						outputStrWidth = 0;
 						nextOutputX = 10;						
@@ -343,6 +347,9 @@ public class MySurfaceView extends SurfaceView implements Callback {
 								nextOutputX += outputStrWidth;
 							}
 						}
+						
+						//outputStr = "Surface.x:" + ScreenWidth;
+						//c.drawText(outputStr, nextOutputX, WindowHeight + rowY, paint);						
 						/*
 						 * p.setTextSize(myTextSize); TextPaint tp=new
 						 * TextPaint(); tp.setTextSize(myTextSize); String str =
