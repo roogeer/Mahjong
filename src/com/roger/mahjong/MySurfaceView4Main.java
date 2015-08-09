@@ -17,23 +17,35 @@ import android.view.SurfaceView;
 
 public class MySurfaceView4Main extends SurfaceView implements Callback {
 	private SurfaceHolder holder;
-	private MyThread myThread1;
-	private MyThread myThread2;
-	private MyThread myThread3;
-	private MyThread myThread4;	
+	//private MyThread myThread1;
+	//private MyThread myThread2;
+	//private MyThread myThread3;
+	//private MyThread myThread4;
+	private MyThread myThread;
 	
 	private int ScreenWidth;
 	private int ScreenHeight;
-	
+	private float textSize;
+	private PlayerInfo p1;
+	private PlayerInfo p2;
+	private PlayerInfo p3;
+	private PlayerInfo p4;
+	private int totalSum;
 	private int charWidth;		//一个字符的宽度
 	private int espStrWidth;	//-8888 字符串的宽度
-	private int totalSum;		//输赢合计
+	private int magicNumberRowX;
+	private int magicNumberRowY;	
 	
 	//public MySurfaceView4Main(Context context, int p1Sum, int p2Sum, int p3Sum, int p4Sum)
-	public MySurfaceView4Main(Context context, PlayerInfo p1, PlayerInfo p2, PlayerInfo p3, PlayerInfo p4)
+	public MySurfaceView4Main(Context context, PlayerInfo aP1, PlayerInfo aP2, PlayerInfo aP3, PlayerInfo aP4)
 	{
 		super(context);
-
+		
+		this.p1 = aP1;
+		this.p2 = aP2;
+		this.p3 = aP3;
+		this.p4 = aP4;
+		
 		this.totalSum = 0;
 		if(p1.LoseWin>0)
 			this.totalSum += p1.LoseWin;
@@ -42,26 +54,28 @@ public class MySurfaceView4Main extends SurfaceView implements Callback {
 		if(p3.LoseWin>0)
 			this.totalSum += p3.LoseWin;
 		if(p4.LoseWin>0)
-			this.totalSum += p4.LoseWin;		
+			this.totalSum += p4.LoseWin;
 		
-		holder = this.getHolder();
-		holder.addCallback(this);
-
 		Rect outRect = new Rect();
 		((Activity)context).getWindow().findViewById(Window.ID_ANDROID_CONTENT).getDrawingRect(outRect);
 		ScreenWidth = outRect.width();
 		ScreenHeight = outRect.height();
+		textSize = Utility.GetTextSizeFactor() * 3 * Utility.GetTextSizeFactor(ScreenWidth);
 		
 		TextPaint tp=new TextPaint();
 		tp.setTextSize(Utility.GetTextSizeFactor() * 3 * Utility.GetTextSizeFactor(ScreenWidth));
 		charWidth=(int)tp.measureText("8");
 		espStrWidth = (int)tp.measureText("-8888");
-		int magicNumberRowX = charWidth/2;
-		int magicNumberRowY = (int)(100 * Utility.GetTextSizeFactor(ScreenWidth));
-		myThread1 = new MyThread(holder, magicNumberRowX, magicNumberRowY+0*ScreenHeight/8, p1, totalSum);
-		myThread2 = new MyThread(holder, magicNumberRowX, magicNumberRowY+2*ScreenHeight/8, p2, totalSum);
-		myThread3 = new MyThread(holder, magicNumberRowX, magicNumberRowY+4*ScreenHeight/8, p3, totalSum);
-		myThread4 = new MyThread(holder, magicNumberRowX, magicNumberRowY+6*ScreenHeight/8, p4, totalSum);
+		magicNumberRowX = charWidth/2;
+		magicNumberRowY = (int)(100 * Utility.GetTextSizeFactor(ScreenWidth));
+		//myThread1 = new MyThread(holder, magicNumberRowX, magicNumberRowY+0*ScreenHeight/8, p1, totalSum);
+		//myThread2 = new MyThread(holder, magicNumberRowX, magicNumberRowY+2*ScreenHeight/8, p2, totalSum);
+		//myThread3 = new MyThread(holder, magicNumberRowX, magicNumberRowY+4*ScreenHeight/8, p3, totalSum);
+		//myThread4 = new MyThread(holder, magicNumberRowX, magicNumberRowY+6*ScreenHeight/8, p4, totalSum);
+		
+		holder = this.getHolder();
+		holder.addCallback(this);		
+		myThread = new MyThread(holder);
 	}
 	
 	@Override
@@ -72,6 +86,7 @@ public class MySurfaceView4Main extends SurfaceView implements Callback {
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0) {
 		// TODO Auto-generated method stub
+		/*
 		myThread1.isRun = true;
 		myThread2.isRun = true;
 		myThread3.isRun = true;
@@ -79,31 +94,37 @@ public class MySurfaceView4Main extends SurfaceView implements Callback {
 		myThread1.start();
 		myThread2.start();
 		myThread3.start();
-		myThread4.start();		
+		myThread4.start();
+		*/
+		myThread.isRun = true;
+		myThread.start();
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
 		// TODO Auto-generated method stub
+		/*
 		myThread1.isRun = false;
 		myThread2.isRun = false;
 		myThread3.isRun = false;
-		myThread4.isRun = false;		
+		myThread4.isRun = false;
+		*/
+		myThread.isRun = false;
 	}
 
 	class MyThread extends Thread
 	{
 		private SurfaceHolder holder;
-		private int px;
-		private int py;
-		private int EndNumber;
-		private int absEndNumber;
-		public PlayerInfo playerInfo;
+		//private PlayerInfo p1;
+		//private PlayerInfo p2;
+		//private PlayerInfo p3;
+		//private PlayerInfo p4;
 		public boolean isRun;
-		public int totalSum;
 		
-		public MyThread(SurfaceHolder holder, int x, int y, PlayerInfo aPlayerInfo, int aTotalSum)
+		public MyThread(SurfaceHolder holder)
 		{
+
+			/*
 			this.holder = holder;
 			this.px = x;
 			this.py = y;
@@ -112,35 +133,97 @@ public class MySurfaceView4Main extends SurfaceView implements Callback {
 			this.absEndNumber = Math.abs(EndNumber);
 			this.isRun = true;
 			this.totalSum = aTotalSum;
+			this.rect4Area_Black=new Rect(0, (int)(py-50 * Utility.GetTextSizeFactor(ScreenWidth)), ScreenWidth, (int)(py+50 * Utility.GetTextSizeFactor(ScreenWidth)));
+			*/
+			
+			this.holder = holder;
+			isRun = true;
+		}
+		
+		private void clearScreen(Canvas c)
+		{
+			c.drawColor(Color.BLACK);			
+		}
+		
+		private void drawPlayerInfo(Canvas c, PlayerInfo playerInfo, int px, int py, int totalSum)
+		{
+			//在画布上输出playerInfo的信息
+			
+			//显示玩家姓名
+			Paint p = new Paint();
+			p.setTextSize(textSize);
+			p.setAntiAlias(true);
+			p.setColor(Color.GRAY);
+			c.drawText(playerInfo.Name, px, py, p);
+			
+			//取姓名字符串的宽度
+			int playerNameWidth=(int)p.measureText(String.valueOf(playerInfo.Name));
+			
+			//画进度条背景
+			p.setColor(Color.GRAY);
+			RectF rectf=new RectF((int)(px+playerNameWidth+20*Utility.GetTextSizeFactor(ScreenWidth)), (int)(py-50 * Utility.GetTextSizeFactor(ScreenWidth)), ScreenWidth-charWidth-espStrWidth, (int)(py+10 * Utility.GetTextSizeFactor(ScreenWidth)));						
+			c.drawRoundRect(rectf, 20f, 20f, p);
+			
+			if(playerInfo.LoseWin>0)
+				p.setColor(Color.RED);
+			else if(playerInfo.LoseWin<0)
+				p.setColor(Color.GREEN);
+			else
+				p.setColor(Color.WHITE);
+
+			//画进度条前景
+			float prograssWidth = rectf.right-rectf.left;
+			float currPrograssValue = Math.abs(playerInfo.LoseWin) * prograssWidth / totalSum;
+			rectf=new RectF((int)(px+playerNameWidth+20*Utility.GetTextSizeFactor(ScreenWidth)), (int)(py-50 * Utility.GetTextSizeFactor(ScreenWidth)), (int)(px+playerNameWidth+20*Utility.GetTextSizeFactor(ScreenWidth)+currPrograssValue), (int)(py+10 * Utility.GetTextSizeFactor(ScreenWidth)));
+			c.drawRoundRect(rectf, 20f, 20f, p);
+			
+			//显示数值
+			c.drawText(String.valueOf(Math.abs(playerInfo.LoseWin)), ScreenWidth-espStrWidth-(charWidth/2), py, p);			
 		}
 		
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			int count =0;
 			while(isRun)
 			{
 				Canvas c=null;
 				try
 				{
 					synchronized (holder) {
-						//c = holder.lockCanvas();
-						//Rect rect=new Rect(px-50, py-50, px+360, py+50);
-						Rect rect=new Rect(0, (int)(py-50 * Utility.GetTextSizeFactor(ScreenWidth)), ScreenWidth, (int)(py+50 * Utility.GetTextSizeFactor(ScreenWidth)));
+						Rect rect=new Rect(0, 0, ScreenWidth, ScreenHeight);						
 						c=holder.lockCanvas(rect);
-						c.drawColor(Color.BLACK);
+						clearScreen(c);
+						
+						//p1信息输出
+						drawPlayerInfo(c, p1, magicNumberRowX, magicNumberRowY+0*ScreenHeight/8, totalSum);
+						
+						//p2信息输出
+						drawPlayerInfo(c, p2, magicNumberRowX, magicNumberRowY+2*ScreenHeight/8, totalSum);
+						
+						//p3信息输出
+						drawPlayerInfo(c, p3, magicNumberRowX, magicNumberRowY+4*ScreenHeight/8, totalSum);
+						
+						//p4信息输出
+						drawPlayerInfo(c, p4, magicNumberRowX, magicNumberRowY+6*ScreenHeight/8, totalSum);
+						
+						isRun=false;
+						//myThread2 = new MyThread(holder, magicNumberRowX, magicNumberRowY+2*ScreenHeight/8, p2, totalSum);
+						//myThread3 = new MyThread(holder, magicNumberRowX, magicNumberRowY+4*ScreenHeight/8, p3, totalSum);
+						//myThread4 = new MyThread(holder, magicNumberRowX, magicNumberRowY+6*ScreenHeight/8, p4, totalSum);
+						
+						/*
 						Paint p = new Paint();
-						//p.setTextSize(myTextSize);
-						p.setTextSize(Utility.GetTextSizeFactor() * 3 * Utility.GetTextSizeFactor(ScreenWidth));
+						//p.setTextSize(Utility.GetTextSizeFactor() * 3 * Utility.GetTextSizeFactor(ScreenWidth));
+						p.setTextSize(textSize);
 						p.setAntiAlias(true);
 						//20150220添加
 						p.setColor(Color.GRAY);
 						c.drawText(playerInfo.Name, px, py, p);
 						
-						TextPaint tp=new TextPaint();
-						tp.setTextSize(Utility.GetTextSizeFactor() * 3 * Utility.GetTextSizeFactor(ScreenWidth));
-						String str= String.valueOf(playerInfo.Name);
-						int playerNameWidth=(int)tp.measureText(str);
+						//TextPaint tp=new TextPaint();
+						//tp.setTextSize(Utility.GetTextSizeFactor() * 3 * Utility.GetTextSizeFactor(ScreenWidth));
+						//tp.setTextSize(textSize);
+						int playerNameWidth=(int)p.measureText(String.valueOf(playerInfo.Name));
 
 						//画进度条背景
 						p.setColor(Color.GRAY);
@@ -163,9 +246,10 @@ public class MySurfaceView4Main extends SurfaceView implements Callback {
 						c.drawRoundRect(rectf, 20f, 20f, p);
 						
 						c.drawText(String.valueOf(count), ScreenWidth-espStrWidth-(charWidth/2), py, p);
-						count++;
+						//count++;
 						if(this.absEndNumber< count)
-							isRun=false;
+						*/
+						//	isRun=false;
 					}
 				}
 				catch(Exception e)
