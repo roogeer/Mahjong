@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="#ff080808"
     tools:context="com.roger.mahjong.MainActivity"
     tools:ignore="MergeRootFrame" >
 

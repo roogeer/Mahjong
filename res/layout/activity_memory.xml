@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#ff080808">
+
+    <ListView
+        android:id="@+id/MemListView"
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textColor="#ffe7e7e7"
+		android:background="#ff080808"
+		android:divider="#ff888888"
+		android:dividerHeight="1px"
+		>
+	</ListView>
+
+</LinearLayout>

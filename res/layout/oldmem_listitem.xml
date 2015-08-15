@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+	<LinearLayout
+	    android:id="@+id/OldMem_Item_RowA"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="#ff080808"
+	    android:orientation="horizontal"
+	    android:weightSum="1" >
+
+	    <TextView
+	        android:id="@+id/tvP1Name"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.0625"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+	        android:text="东" />
+	    <TextView
+        	android:id="@+id/tvP1LoseWin"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.125"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="888" />
+	    <TextView
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.083"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="  " />
+	    	    
+	    <TextView
+        	android:id="@+id/tvP2Name"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.0625"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="南" />
+	    <TextView
+        	android:id="@+id/tvP2LoseWin"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.125"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="-888" />
+	    <TextView
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.083"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="  " />
+	    
+	    <TextView
+        	android:id="@+id/tvP3Name"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.0625"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="西" />
+	    <TextView
+        	android:id="@+id/tvP3LoseWin"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.125"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="-888" />
+	    <TextView
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.083"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="  " />	    
+	    
+	    <TextView
+        	android:id="@+id/tvP4Name"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.0625"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="北" />
+	    <TextView
+        	android:id="@+id/tvP4LoseWin"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.125"
+	        android:gravity="center"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="-888" />	    
+	</LinearLayout>
+	
+	<LinearLayout
+	    android:id="@+id/OldMem_Item_RowB"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="#ff080808"
+	    android:orientation="horizontal"
+	    android:weightSum="1" >
+	    <TextView
+        	android:id="@+id/riqi"
+        	android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="right"
+	        android:textColor="#ffe7e7e7"
+	        android:textSize="20sp"
+        	android:text="1978-01-30 00:00" />	    
+	</LinearLayout>
+</LinearLayout>

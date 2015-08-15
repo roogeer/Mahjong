@@ -58,6 +58,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 	int FragmentFlag;	//保存当前显示的是哪个Fragment，此为下策，找到优雅的方法后替换
 	
 	ArrayList<HashMap<String, String>> mylist;
+	ArrayList<HashMap<String, String>> memlist;
 	int SN;
 	
 	protected void onCreate(Bundle savedInstanceState) {

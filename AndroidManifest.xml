@@ -27,6 +27,9 @@
 		<activity
 			android:name=".Activity_NewGame">
         </activity>
+		<activity
+			android:name=".MemoryActivity">
+        </activity>        
        
     </application>
 

@@ -76,6 +76,47 @@ public class MainActivity extends Activity implements InfoInputListener{
 	public void OldMemoryOnClick(View v)
 	{
 		Toast.makeText(getApplicationContext(), "¾ÉµÄ»ØÒä", Toast.LENGTH_SHORT).show();
+		ArrayList<HashMap<String, String>> memlist;
+		
+		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
+		SQLiteDatabase db=dbHelper.getWritableDatabase();
+		String strSQL = "SELECT rowid, riqi, p1name, p1sum, p2name, p2sum, p3name, p3sum, p4name, p4sum FROM ViewGameInfo ORDER BY rowid DESC";
+		Cursor cursor =  db.rawQuery(strSQL, null);
+		if(0==cursor.getCount())
+		{
+			return;
+		}
+		
+		memlist = new ArrayList<HashMap<String,String>>();
+		Bundle bundle = new Bundle();
+		bundle.putString("gameflag", "oldmemory");
+		
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("p1Name", cursor.getString(cursor.getColumnIndex("p1name")));				
+				map.put("p1LoseWin", String.valueOf(cursor.getInt(cursor.getColumnIndex("p1sum"))));
+				map.put("p2Name", cursor.getString(cursor.getColumnIndex("p2name")));				
+				map.put("p2LoseWin", String.valueOf(cursor.getInt(cursor.getColumnIndex("p2sum"))));
+				map.put("p3Name", cursor.getString(cursor.getColumnIndex("p3name")));				
+				map.put("p3LoseWin", String.valueOf(cursor.getInt(cursor.getColumnIndex("p3sum"))));
+				map.put("p4Name", cursor.getString(cursor.getColumnIndex("p4name")));				
+				map.put("p4LoseWin", String.valueOf(cursor.getInt(cursor.getColumnIndex("p4sum"))));
+				map.put("riqi", cursor.getString(cursor.getColumnIndex("riqi")));			
+				memlist.add(map);
+			}while(cursor.moveToNext());
+		}
+		cursor.close();
+		db.close();
+
+		bundle.putSerializable("memlist", memlist);
+				
+		Intent it=new Intent(MainActivity.this, MemoryActivity.class);
+		it.putExtras(bundle);
+		startActivity(it);
+		//finish();
 	}
 	
 	public void GoOnClick(View v)
