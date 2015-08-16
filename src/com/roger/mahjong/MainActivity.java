@@ -32,12 +32,13 @@ public class MainActivity extends Activity implements InfoInputListener{
 		btnNewGameButton = (Button)findViewById(R.id.button_NewGame);
 		btnGoOnButton = (Button)findViewById(R.id.button_GoOn);
 		btnOldMemoryButton=(Button)findViewById(R.id.button_OldMemory);
-		
+
+		/*
 		Display display = getWindowManager().getDefaultDisplay();
 		Point point = new Point();
 		display.getSize(point);
-		
 		setTitle("屏幕分辨率为："+point.x+'*'+point.y);
+		*/
 		
 		btnNewGameButton.setTextSize(Utility.GetTextSizeFactor());
 		btnGoOnButton.setTextSize(Utility.GetTextSizeFactor());
@@ -57,16 +58,16 @@ public class MainActivity extends Activity implements InfoInputListener{
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_exit) {
-			return true;
-		}
+		//int id = item.getItemId();
+		//if (id == R.id.action_exit) {
+		//	return true;
+		//}
 		return super.onOptionsItemSelected(item);
 	}
 
 	public void NewGameOnClick(View v)
 	{
-		Toast.makeText(getApplicationContext(), "新的故事", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "新的故事", Toast.LENGTH_SHORT).show();
 
 		DialogFragment_PlayerInfo dialogFragment_info = new DialogFragment_PlayerInfo();
 		dialogFragment_info.show(getFragmentManager(), "新的故事");
@@ -75,7 +76,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 	
 	public void OldMemoryOnClick(View v)
 	{
-		Toast.makeText(getApplicationContext(), "旧的回忆", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "旧的回忆", Toast.LENGTH_SHORT).show();
 		ArrayList<HashMap<String, String>> memlist;
 		
 		MahjongDatabaseHelper dbHelper = new MahjongDatabaseHelper(this, "mahjong.db", 1);
@@ -215,7 +216,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 		save2DB(p1Name, p2Name, p3Name, p4Name, Integer.valueOf(jdvalue), Utility.LoadGameRiqi());
 		
 		String str = p1Name + "-" + p2Name + "-" + p3Name + "-" + p4Name + "-" + jdvalue;
-		Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
 		Bundle bundle=new Bundle();
 		bundle.putString("gameflag", "newgame");	//选择开始一局新的游戏
 		bundle.putString("p1name", p1Name);
@@ -261,7 +262,7 @@ public class MainActivity extends Activity implements InfoInputListener{
 		SQLiteDatabase db=dbHelper.getWritableDatabase();
 		db.execSQL("insert into TableGameInfo(p1name, p2name, p3name, p4name, jdvalue, riqi) values(?, ?, ?, ?, ?, ?)", new Object[]{p1name, p2name, p3name, p4name, jds, riqi});
 		db.close();
-		Toast.makeText(MyApplication.getContext(), "游戏信息已存入数据库中", Toast.LENGTH_SHORT).show();	
+		//Toast.makeText(MyApplication.getContext(), "游戏信息已存入数据库中", Toast.LENGTH_SHORT).show();	
 		
 		//从数据库中读取游戏信息以检查是否正确写入
 		checkGameinfo();

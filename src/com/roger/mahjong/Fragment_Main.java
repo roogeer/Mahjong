@@ -25,18 +25,8 @@ public class Fragment_Main extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		//System.out.println("Fragment_Main-->onCreateView");
 		Log.i("Fragment_main", "-->onCreateView");
-		//return inflater.inflate(R.layout.tab_main,container,false);
 		Activity_NewGame activity_NewGame = (Activity_NewGame)getActivity();
-		//int p1SumValue = activity_NewGame.intP1Sum;
-		//int p2SumValue = activity_NewGame.intP2Sum;
-		//int p3SumValue = activity_NewGame.intP3Sum;
-		//int p4SumValue = activity_NewGame.intP4Sum;
-		int p1SumValue = activity_NewGame.PlayerInfoP1.LoseWin;
-		int p2SumValue = activity_NewGame.PlayerInfoP2.LoseWin;
-		int p3SumValue = activity_NewGame.PlayerInfoP3.LoseWin;
-		int p4SumValue = activity_NewGame.PlayerInfoP4.LoseWin;		
 
 		return new MySurfaceView4Main(this.getActivity(), activity_NewGame.PlayerInfoP1, activity_NewGame.PlayerInfoP2, activity_NewGame.PlayerInfoP3, activity_NewGame.PlayerInfoP4);		
 	}

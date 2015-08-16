@@ -46,7 +46,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 	
 	int InputFlag;	//记录输入数据的标志位，以确定输入是否有效，和谁输谁赢
 	boolean InputOk;
-	//public int intP1Data;	//测试阶段使用
 	
 	//fragment实例
 	Fragment_Main fragment_Main;
@@ -67,7 +66,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		
 		Intent it = this.getIntent();
 		Bundle bundle = it.getExtras();
-		
 		String GameFlag = bundle.getString("gameflag");
 		
 		if(GameFlag.equalsIgnoreCase("newgame"))
@@ -83,7 +81,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP4.Name= bundle.getString("p4name");
 			JDVALUE = bundle.getInt("jdvalue");
 			riqi = bundle.getString("riqi");
-			//intP1Data = 1;
 			
 			mylist = new ArrayList<HashMap<String,String>>();
 			SN = 1;
@@ -94,61 +91,11 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		}
 		else if(GameFlag.equalsIgnoreCase("goon"))
 		{
-			PlayerInfoP1 = new PlayerInfo();
-			PlayerInfoP2 = new PlayerInfo();
-			PlayerInfoP3 = new PlayerInfo();
-			PlayerInfoP4 = new PlayerInfo();
-			
-			PlayerInfoP1.Name=bundle.getString("p1name");
-			PlayerInfoP2.Name=bundle.getString("p2name");
-			PlayerInfoP3.Name=bundle.getString("p3name");
-			PlayerInfoP4.Name= bundle.getString("p4name");
-			
-			JDVALUE = bundle.getInt("jds");
-			riqi = bundle.getString("riqi");
-			//intP1Data = 1;
-			
-			mylist = new ArrayList<HashMap<String,String>>();
-			mylist = (ArrayList<HashMap<String,String>>)bundle.getSerializable("xlist");
-			
-			//20150217提取每一局的记录到各个玩家变量中
-			for (HashMap<String, String> hashMap: mylist)
-			{
-				PlayerInfoP1.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p1value")));
-				PlayerInfoP2.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p2value")));
-				PlayerInfoP3.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p3value")));
-				PlayerInfoP4.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p4value")));				
-			}
-			PlayerInfoP1.Update4LostWin();
-			PlayerInfoP2.Update4LostWin();
-			PlayerInfoP3.Update4LostWin();
-			PlayerInfoP4.Update4LostWin();
-			String str="好的继续："+PlayerInfoP1.Name+String.valueOf(PlayerInfoP1.LoseWin)+PlayerInfoP2.Name+String.valueOf(PlayerInfoP2.LoseWin)+PlayerInfoP3.Name+String.valueOf(PlayerInfoP3.LoseWin)+PlayerInfoP4.Name+String.valueOf(PlayerInfoP4.LoseWin)+"\n"+String.valueOf(mylist.size());
-			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();			
-			//**************************************
-			
-			SN = mylist.size();
-			PlayerInfoP1.Rounds = SN;
-			PlayerInfoP2.Rounds = SN;
-			PlayerInfoP3.Rounds = SN;
-			PlayerInfoP4.Rounds = SN;
-			
-			SN++;
-			
-			PlayerInfoP1.LoseWin = bundle.getInt("p1sum");
-			PlayerInfoP2.LoseWin = bundle.getInt("p2sum");
-			PlayerInfoP3.LoseWin = bundle.getInt("p3sum");
-			PlayerInfoP4.LoseWin = bundle.getInt("p4sum");
-			
-			PlayerInfoP1.WinNumber = bundle.getInt("p1win");
-			PlayerInfoP2.WinNumber = bundle.getInt("p2win");
-			PlayerInfoP3.WinNumber = bundle.getInt("p3win");
-			PlayerInfoP4.WinNumber = bundle.getInt("p4win");
-
-			PlayerInfoP1.JDS = bundle.getInt("p1jds");
-			PlayerInfoP2.JDS = bundle.getInt("p2jds");
-			PlayerInfoP3.JDS = bundle.getInt("p3jds");
-			PlayerInfoP4.JDS = bundle.getInt("p4jds");
+			this.prepareGameInfo(bundle);
+		}
+		else if(GameFlag.equalsIgnoreCase("oldmemory"))
+		{
+			this.prepareGameInfo(bundle);
 		}
 	
 		ActionBar actionBar = getActionBar();
@@ -194,12 +141,22 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		actionBar.addTab(Tab_P3);
 		actionBar.addTab(Tab_P4);
 		actionBar.addTab(Tab_Detail);
+		
+		Log.i("roger", "end onCreate");
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu4newgame_activity, menu);
+		Log.i("roger", "in onCreateOptionsMenu");
+		Intent it = this.getIntent();
+		Bundle bundle = it.getExtras();
+		String GameFlag = bundle.getString("gameflag");
+		//如果是旧的回忆，则不显示添加记录菜单
+		if(!GameFlag.equalsIgnoreCase("oldmemory"))
+		{
+			getMenuInflater().inflate(R.menu.menu4newgame_activity, menu);
+		}
 		return true;
 	}
 	
@@ -208,12 +165,9 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.action_add:
-			Toast.makeText(getApplicationContext(), "添加记录", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "添加记录", Toast.LENGTH_SHORT).show();
 			DialogFragment_Add dialogFragment_Add = new DialogFragment_Add();
 			dialogFragment_Add.show(getFragmentManager(), "添加记录");
-			return true;
-		case R.id.action_exit:
-			Toast.makeText(getApplicationContext(), "退出应用", Toast.LENGTH_SHORT).show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);			
@@ -567,6 +521,66 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		db.close();
 	}
 
+	private void prepareGameInfo(Bundle bundle)
+	{
+		
+		PlayerInfoP1 = new PlayerInfo();
+		PlayerInfoP2 = new PlayerInfo();
+		PlayerInfoP3 = new PlayerInfo();
+		PlayerInfoP4 = new PlayerInfo();
+		
+		PlayerInfoP1.Name=bundle.getString("p1name");
+		PlayerInfoP2.Name=bundle.getString("p2name");
+		PlayerInfoP3.Name=bundle.getString("p3name");
+		PlayerInfoP4.Name= bundle.getString("p4name");
+		
+		JDVALUE = bundle.getInt("jds");
+		riqi = bundle.getString("riqi");
+		//intP1Data = 1;
+		
+		mylist = new ArrayList<HashMap<String,String>>();
+		mylist = (ArrayList<HashMap<String,String>>)bundle.getSerializable("xlist");
+		
+		//20150217提取每一局的记录到各个玩家变量中
+		for (HashMap<String, String> hashMap: mylist)
+		{
+			PlayerInfoP1.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p1value")));
+			PlayerInfoP2.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p2value")));
+			PlayerInfoP3.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p3value")));
+			PlayerInfoP4.lstRecordPerRound.add(Integer.valueOf(hashMap.get("p4value")));				
+		}
+		PlayerInfoP1.Update4LostWin();
+		PlayerInfoP2.Update4LostWin();
+		PlayerInfoP3.Update4LostWin();
+		PlayerInfoP4.Update4LostWin();
+		//String str="好的继续："+PlayerInfoP1.Name+String.valueOf(PlayerInfoP1.LoseWin)+PlayerInfoP2.Name+String.valueOf(PlayerInfoP2.LoseWin)+PlayerInfoP3.Name+String.valueOf(PlayerInfoP3.LoseWin)+PlayerInfoP4.Name+String.valueOf(PlayerInfoP4.LoseWin)+"\n"+String.valueOf(mylist.size());
+		//Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();			
+		//**************************************
+		
+		SN = mylist.size();
+		PlayerInfoP1.Rounds = SN;
+		PlayerInfoP2.Rounds = SN;
+		PlayerInfoP3.Rounds = SN;
+		PlayerInfoP4.Rounds = SN;
+		
+		SN++;
+		
+		PlayerInfoP1.LoseWin = bundle.getInt("p1sum");
+		PlayerInfoP2.LoseWin = bundle.getInt("p2sum");
+		PlayerInfoP3.LoseWin = bundle.getInt("p3sum");
+		PlayerInfoP4.LoseWin = bundle.getInt("p4sum");
+		
+		PlayerInfoP1.WinNumber = bundle.getInt("p1win");
+		PlayerInfoP2.WinNumber = bundle.getInt("p2win");
+		PlayerInfoP3.WinNumber = bundle.getInt("p3win");
+		PlayerInfoP4.WinNumber = bundle.getInt("p4win");
+
+		PlayerInfoP1.JDS = bundle.getInt("p1jds");
+		PlayerInfoP2.JDS = bundle.getInt("p2jds");
+		PlayerInfoP3.JDS = bundle.getInt("p3jds");
+		PlayerInfoP4.JDS = bundle.getInt("p4jds");		
+	}
+	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
