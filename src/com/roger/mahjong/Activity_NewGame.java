@@ -15,10 +15,12 @@ import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Activity_NewGame extends Activity implements AddInputListener {
@@ -59,6 +61,23 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 	ArrayList<HashMap<String, String>> mylist;
 	ArrayList<HashMap<String, String>> memlist;
 	int SN;
+	
+	Tab Tab_Main;
+	Tab Tab_P1;
+	Tab Tab_P2;
+	Tab Tab_P3;
+	Tab Tab_P4;
+	Tab Tab_Detail;
+	TextView tvMainTitle;
+	TextView tvP1LoseWin;
+	TextView tvP1Name;
+	TextView tvP2LoseWin;
+	TextView tvP2Name;
+	TextView tvP3LoseWin;
+	TextView tvP3Name;
+	TextView tvP4LoseWin;
+	TextView tvP4Name;
+	TextView tvDetailTitle;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,14 +121,33 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		actionBar.setDisplayShowTitleEnabled(false);
+		//actionBar.setDisplayShowTitleEnabled(false);
 		
-		Tab Tab_Main = actionBar.newTab().setText("主");
-		Tab Tab_P1 = actionBar.newTab().setText(PlayerInfoP1.Name);
-		Tab Tab_P2 = actionBar.newTab().setText(PlayerInfoP2.Name);
-		Tab Tab_P3 = actionBar.newTab().setText(PlayerInfoP3.Name);
-		Tab Tab_P4 = actionBar.newTab().setText(PlayerInfoP4.Name);
-		Tab Tab_Detail = actionBar.newTab().setText("详");
+		Tab_Main = actionBar.newTab();
+		Tab_Main.setCustomView(R.layout.tab_layout_main);
+		tvMainTitle = (TextView)Tab_Main.getCustomView().findViewById(R.id.tab_main_title);
+		tvMainTitle.setTextSize(Utility.GetTextSizeFactor());
+		tvMainTitle.setText("主");		
+
+		Tab_P1 = actionBar.newTab();
+		Tab_P1.setCustomView(R.layout.tab_layout_dong);
+
+		Tab_P2 = actionBar.newTab();
+		Tab_P2.setCustomView(R.layout.tab_layout_nan);
+		
+		Tab_P3 = actionBar.newTab();
+		Tab_P3.setCustomView(R.layout.tab_layout_xi);
+		
+		Tab_P4 = actionBar.newTab();
+		Tab_P4.setCustomView(R.layout.tab_layout_bei);
+		
+		updateTabInfo();
+		
+		Tab_Detail = actionBar.newTab();
+		Tab_Detail.setCustomView(R.layout.tab_layout_detail);		
+		tvDetailTitle = (TextView)Tab_Detail.getCustomView().findViewById(R.id.tab_detail_title);
+		tvDetailTitle.setTextSize(Utility.GetTextSizeFactor());
+		tvDetailTitle.setText("详");
 
 		fragment_Main = new Fragment_Main();
 		MyTabListener mainListener=new MyTabListener(fragment_Main);
@@ -133,8 +171,8 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		
 		fragment_Detail = new Fragment_Detail();
 		MyTabListener detailListener=new MyTabListener(fragment_Detail);
-		Tab_Detail.setTabListener(detailListener);		
-		
+		Tab_Detail.setTabListener(detailListener);
+	
 		actionBar.addTab(Tab_Main);
 		actionBar.addTab(Tab_P1);
 		actionBar.addTab(Tab_P2);
@@ -410,7 +448,11 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			PlayerInfoP1.Update4LostWin();
 			PlayerInfoP2.Update4LostWin();
 			PlayerInfoP3.Update4LostWin();
-			PlayerInfoP4.Update4LostWin();			
+			PlayerInfoP4.Update4LostWin();	
+			
+			//更新Tab标题
+			Log.i("roger", "输入数据完成后");
+			//updateTabInfo();
 			
 			//存入数据库中
 			writeInDatabase(intP1, intP2, intP3, intP4, formatter.format(curDate), riqi);
@@ -451,6 +493,63 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		//添加每一局的记录
 		db.execSQL("insert into TableGameRec(p1value, p2value, p3value, p4value, shijian, riqi) values(?,?,?,?,?,?)", new Object[]{p1data,p2data,p3data,p4data,shijian,riqi});
 		db.close();	
+	}
+	
+	private void updateTabInfo()
+	{
+		Log.i("roger", "in updateTabInfo()");
+		
+		tvP1LoseWin = (TextView)Tab_P1.getCustomView().findViewById(R.id.tab_dong_losewin);
+		tvP1Name = (TextView)Tab_P1.getCustomView().findViewById(R.id.tab_dong_name);		
+		tvP1LoseWin.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		if(PlayerInfoP1.LoseWin < 0)
+			tvP1LoseWin.setTextColor(Color.GREEN);
+		else if(PlayerInfoP1.LoseWin > 0)
+			tvP1LoseWin.setTextColor(Color.RED);
+		else
+			tvP1LoseWin.setTextColor(Color.GRAY);
+		tvP1LoseWin.setText(String.valueOf(Math.abs(PlayerInfoP1.LoseWin)));
+		tvP1Name.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		tvP1Name.setText(PlayerInfoP1.Name);
+		
+		tvP2LoseWin = (TextView)Tab_P2.getCustomView().findViewById(R.id.tab_nan_losewin);
+		tvP2Name = (TextView)Tab_P2.getCustomView().findViewById(R.id.tab_nan_name);		
+		tvP2LoseWin.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		if(PlayerInfoP2.LoseWin < 0)
+			tvP2LoseWin.setTextColor(Color.GREEN);
+		else if(PlayerInfoP2.LoseWin > 0)
+			tvP2LoseWin.setTextColor(Color.RED);
+		else
+			tvP2LoseWin.setTextColor(Color.GRAY);
+		tvP2LoseWin.setText(String.valueOf(Math.abs(PlayerInfoP2.LoseWin)));
+		tvP2Name.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		tvP2Name.setText(PlayerInfoP2.Name);
+		
+		tvP3LoseWin = (TextView)Tab_P3.getCustomView().findViewById(R.id.tab_xi_losewin);
+		tvP3Name = (TextView)Tab_P3.getCustomView().findViewById(R.id.tab_xi_name);		
+		tvP3LoseWin.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		if(PlayerInfoP3.LoseWin < 0)
+			tvP3LoseWin.setTextColor(Color.GREEN);
+		else if(PlayerInfoP3.LoseWin > 0)
+			tvP3LoseWin.setTextColor(Color.RED);
+		else
+			tvP3LoseWin.setTextColor(Color.GRAY);
+		tvP3LoseWin.setText(String.valueOf(Math.abs(PlayerInfoP3.LoseWin)));
+		tvP3Name.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		tvP3Name.setText(PlayerInfoP3.Name);
+		
+		tvP4LoseWin = (TextView)Tab_P4.getCustomView().findViewById(R.id.tab_bei_losewin);
+		tvP4Name = (TextView)Tab_P4.getCustomView().findViewById(R.id.tab_bei_name);		
+		tvP4LoseWin.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		if(PlayerInfoP4.LoseWin < 0)
+			tvP4LoseWin.setTextColor(Color.GREEN);
+		else if(PlayerInfoP4.LoseWin > 0)
+			tvP4LoseWin.setTextColor(Color.RED);
+		else
+			tvP4LoseWin.setTextColor(Color.GRAY);
+		tvP4LoseWin.setText(String.valueOf(Math.abs(PlayerInfoP4.LoseWin)));
+		tvP4Name.setTextSize(Utility.GetTextSizeFactor()*0.8f);
+		tvP4Name.setText(PlayerInfoP4.Name);
 	}
 	
 	private void updatePlayerInfoFromDB()
