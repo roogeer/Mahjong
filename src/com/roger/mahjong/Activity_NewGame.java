@@ -444,15 +444,11 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			map.put("shijian", formatter.format(curDate));
 			mylist.add(map);
 			
-			//更新PlayerInfo成员数据
+			//更新PlayerInfo成员数据，此处主要是更新玩家每局后的输赢变化情况
 			PlayerInfoP1.Update4LostWin();
 			PlayerInfoP2.Update4LostWin();
 			PlayerInfoP3.Update4LostWin();
 			PlayerInfoP4.Update4LostWin();	
-			
-			//更新Tab标题
-			Log.i("roger", "输入数据完成后");
-			//updateTabInfo();
 			
 			//存入数据库中
 			writeInDatabase(intP1, intP2, intP3, intP4, formatter.format(curDate), riqi);
@@ -460,7 +456,11 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 			
 			SN++;
 
+			//更新玩家的基本数据字段
 			this.updatePlayerInfoFromDB();
+			
+			//更新Tab标题
+			updateTabInfo();
 		}
 		switch(FragmentFlag)
 		{
