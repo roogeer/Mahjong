@@ -180,6 +180,13 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		actionBar.addTab(Tab_P4);
 		actionBar.addTab(Tab_Detail);
 		
+		//2015.09.13 POST功能
+		//取TableGameInfo表条目
+		//Log.i("roger", "tableGameInfo_Item.gson=="+getTableGameInfo_ItemGsonWithRiqi("2015-09-13 13:35"));
+		//Log.i("roger", "tableGameRec_Item.gson=="+getTableGameRec_ItemsGsonWithRiqi("2015-09-13 13:35"));
+		
+		Log.i("roger", (new PostInfoWithRiqi("2015-09-13 13:35")).GsonStr);
+		
 		Log.i("roger", "end onCreate");
 	}
 	
@@ -687,5 +694,22 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		Log.i("roger", "onPause() in Activity_NewGame.java");
 	}
 	
+	private String getTableGameInfo_ItemGsonWithRiqi(String aRiqi)
+	{
+		String result = "";
+		
+		TableGameInfo_Item tableGameInfo_Item = new TableGameInfo_Item(aRiqi);
+		result = tableGameInfo_Item.GsonStr;
+		return result;
+	}
+	
+	private String getTableGameRec_ItemsGsonWithRiqi(String aRiqi)
+	{
+		String result = "";
+		
+		TableGameRec_Items tableGameRec_Items = new TableGameRec_Items(aRiqi);
+		result = tableGameRec_Items.GsonStr;
+		return result;
+	}
 	
 }
