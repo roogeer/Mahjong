@@ -1,12 +1,15 @@
 package com.roger.mahjong;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.roger.mahjong.DialogFragment_Add.AddInputListener;
+import com.roger.mahjong.TableGameRec_Items.TableGameRec_Item;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -22,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class Activity_NewGame extends Activity implements AddInputListener {
 	//20150217，添加PlayerInfo类
@@ -182,10 +186,26 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		
 		//2015.09.13 POST功能
 		//取TableGameInfo表条目
-		//Log.i("roger", "tableGameInfo_Item.gson=="+getTableGameInfo_ItemGsonWithRiqi("2015-09-13 13:35"));
-		//Log.i("roger", "tableGameRec_Item.gson=="+getTableGameRec_ItemsGsonWithRiqi("2015-09-13 13:35"));
 		
-		Log.i("roger", (new PostInfoWithRiqi("2015-09-13 13:35")).GsonStr);
+		PostInfoWithRiqi postInfoWithRiqi = new PostInfoWithRiqi("2015-09-13 13:35");
+		Log.i("roger", postInfoWithRiqi.GsonStr);
+		
+		//2015.09.14 测试get来的数据
+		Gson gson = new Gson();
+		TableGameInfo_Item mytabGameInfo_Item = gson.fromJson(postInfoWithRiqi.GsonInfo, TableGameInfo_Item.class); 
+		String tP1name = mytabGameInfo_Item.p1name;
+		String tP2name = mytabGameInfo_Item.p2name;
+		String tP3name = mytabGameInfo_Item.p3name;
+		String tP4name = mytabGameInfo_Item.p4name;
+		int tJdvalue = mytabGameInfo_Item.jdvalue;
+		String tRiqi = mytabGameInfo_Item.riqi;
+		Log.i("roger", "Game Info from GSON:" + tP1name + " " + tP2name + " " + tP3name + " " + tP4name + " " + tJdvalue + " " + tRiqi);
+		
+		TableGameRec_Items mytaGameRec_Items = gson.fromJson(postInfoWithRiqi.GsonRec, TableGameRec_Items.class);
+		for(TableGameRec_Item t:mytaGameRec_Items.listTableGameRecs)
+		{
+			Log.i("roger", "Game Recs from Gson:" + t.p1value + " " + t.p2value + " " + t.p3value + " " + t.p4value + " " +t.shijian + " " + t.riqi);
+		}
 		
 		Log.i("roger", "end onCreate");
 	}
