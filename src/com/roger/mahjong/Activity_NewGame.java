@@ -694,6 +694,7 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		Log.i("roger", "onPause() in Activity_NewGame.java");
 	}
 	
+	/*
 	private String getTableGameInfo_ItemGsonWithRiqi(String aRiqi)
 	{
 		String result = "";
@@ -711,5 +712,6 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		result = tableGameRec_Items.GsonStr;
 		return result;
 	}
+	*/
 	
 }

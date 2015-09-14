@@ -1,9 +1,7 @@
 package com.roger.mahjong;
 
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -28,9 +26,9 @@ public class TableGameRec_Items {
 			this.riqi = aRiqi;
 		}
 	}
-	
+
 	public ArrayList<TableGameRec_Item> listTableGameRecs;
-	public String GsonStr;
+	//public String GsonStr;
 	
 	public TableGameRec_Items(String aRiqi)
 	{
@@ -58,7 +56,9 @@ public class TableGameRec_Items {
 		cursor.close();
 		db.close();
 		
+		/*
 		Gson gson = new Gson();
 		this.GsonStr = gson.toJson(listTableGameRecs);
+		*/
 	}
 }

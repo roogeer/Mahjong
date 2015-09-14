@@ -12,7 +12,7 @@ public class TableGameInfo_Item {
 	public String p4name;
 	public int jdvalue;
 	public String riqi;
-	public String GsonStr;
+	//public String GsonStr;
 
 	public TableGameInfo_Item(String aRiqi)
 	{
@@ -35,7 +35,9 @@ public class TableGameInfo_Item {
 		cursor.close();
 		db.close();		
 		
+		/*
 		Gson gson = new Gson();
 		this.GsonStr = gson.toJson(this, TableGameInfo_Item.class);
+		*/
 	}
 }
