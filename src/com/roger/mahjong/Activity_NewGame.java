@@ -1,6 +1,8 @@
 package com.roger.mahjong;
 
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,6 +210,15 @@ public class Activity_NewGame extends Activity implements AddInputListener {
 		}
 		
 		Log.i("roger", "end onCreate");
+		
+		//2015.09.27 中秋，测试向服务器POST数据
+		SendRequestWithHttpURLConnection(postInfoWithRiqi);
+	}
+	
+	private void SendRequestWithHttpURLConnection(PostInfoWithRiqi postInfoWithRiqi)
+	{
+		MyThread myThread = new MyThread(postInfoWithRiqi);
+		myThread.start();
 	}
 	
 	@Override
